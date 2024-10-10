@@ -1,0 +1,5 @@
+*.tar.xz
+*.bin
+ramips/
+TODO
+src/openwrt-imagebuilder*

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="bootstrap.bundle.min.js" defer></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+    
+                <div role="alert" id="notif">
+                    <label id="notif-message"><!-- do not delete --></label>
+                    <button type="button" class="btn-close" id="close-notif"></button>
+                </div>
+    
+                <a class="btn btn-outline-secondary mb-3" href="guest.html?ref=dashboard">Back to Dashboard</a>
+                
+                <h1>User Management</h1>
+                <div class="card p-4">
+                    <form>
+                        <div class="mb-3">
+                            <label for="newUsername" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="newUsername">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Password</label>
+                            <input type="text" class="form-control" id="newPassword">
+                        </div>
+                        <input type="button" id="modify-user-btn" class="btn btn-success" value="Add User" onclick="addUser()">
+                        <button type="reset" class="btn btn-outline-dark" onclick="resetForm()">Cancel</button>
+                    </form>
+                </div>
+    
+                <table class="table mt-5">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userList"></tbody>
+                </table>
+    
+            </div>
+        </div>
+    </div>
+    <div id="overlay">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    
+    <div class="modal" tabindex="-1" id="confirmModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure that you want to delete <span class="badge bg-warning text-body" id="modal-username">this user</span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="modal-delete-btn" onclick="deleteUser(this)" data-username="">Yes, Delete it.</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script type="text/javascript" src="./management.js" defer></script>
+    </body>
+</html>

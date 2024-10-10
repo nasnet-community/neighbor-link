@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Failed</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f44336, #ef5350);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        #countdown {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 15px 30px;
+            background-color: #ffffff;
+            color: #f44336;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .button.active {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        .button:hover {
+            background-color: #ffcdd2;
+        }
+
+        .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="icon">⚠️</div>
+        <h1>Authentication Failed</h1>
+        <p>Please wait <span id="countdown">10</span> seconds before trying again.</p>
+        <a href="splash.html" class="button" id="returnButton">Return to Splash Page</a>
+    </div>
+
+    <script>
+        // Countdown function
+        let countdown = 10;
+        const countdownElement = document.getElementById('countdown');
+        const returnButton = document.getElementById('returnButton');
+
+        const timer = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+
+            if (countdown === 0) {
+                clearInterval(timer);
+                returnButton.classList.add('active'); // Make the button clickable
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+config defaults
+        option syn_flood '1'
+        option input 'REJECT'
+        option output 'ACCEPT'
+        option forward 'REJECT'
+
+config zone 'lan'
+        option name 'lan'
+        list network 'lan'
+        option input 'ACCEPT'
+        option output 'ACCEPT'
+        option forward 'ACCEPT'
+
+config zone 'wanzone'
+        option name 'wanzone'
+        list network 'wan'
+        option input 'REJECT'
+        option output 'ACCEPT'
+        option forward 'REJECT'
+        option masq '1'
+        option mtu_fix '1'
+
+config zone 'wwanzone'
+        option name 'wwanzone'
+        list network 'wwan'
+        option input 'REJECT'
+        option output 'ACCEPT'
+        option forward 'REJECT'
+        option masq '1'
+        option mtu_fix '1'
+
+config zone 'wg0zone'                       
+        option name 'wg0zone'               
+        list network 'wg0'                  
+        option input 'ACCEPT'                
+        option output 'ACCEPT'               
+        option forward 'REJECT'                      
+        option masq '1'                              
+        option mtu_fix '1'  
+
+config zone 'guest_zone'
+        option name 'guest_zone'
+        list network 'Guest'
+        option input 'ACCEPT'
+        option output 'ACCEPT'
+        option forward 'ACCEPT'
+
+config forwarding
+        option src 'lan'
+        option dest 'wanzone'
+
+config forwarding
+        option src 'lan'
+        option dest 'wwanzone'
+
+config forwarding                                    
+        option src 'lan'                             
+        option dest 'wg0zone' 
+
+config forwarding
+        option src 'guest_zone'
+        option dest 'wanzone'
+
+config forwarding
+        option src 'guest_zone'
+        option dest 'wwanzone'
+
+config forwarding                                    
+        option src 'guest_zone'                             
+        option dest 'wg0zone' 
+
+config redirect
+        option name 'Redirect DNS to 8.8.8.8'
+        option src 'lan'
+        option src_dport '53'
+        option proto 'tcp udp'
+        option dest_port '53'
+        option target 'DNAT'
+        option dest_ip '8.8.8.8'
+
+config rule                                  
+        option name 'Restrict IP Range Access'
+        option src 'guest_zone'                      
+        option src_ip '192.168.3.100/24'      
+        option dest_port '2027'               
+        option proto 'tcp'                    
+        option dest 'guest_zone'                     
+        option target 'ACCEPT'                
+
+                     
+config rule
+    option name 'Block Guest Access to Management Interface'
+    option src 'guest_zone'                                      
+    option dest_ip '192.168.0.0/16'  # Specify the router's management IP
+    option dest_port '80'
+    option proto 'tcp'                    
+    option target 'REJECT'
+
+config rule                                   
+        option name 'Drop_Guest_Traffic'   
+        option src 'guest_zone'                      
+        option src_ip '192.168.3.100/24'      
+        option dest '*' 
+        option proto 'all'                   
+        option target 'REJECT'    

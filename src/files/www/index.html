@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="bootstrap.bundle.min.js" defer></script>
+    <script type="text/javascript" src="./index.js" defer></script>
+</head>
+<body>
+    <div class=" d-flex  justify-content-center align-items-center position-fixed top-0 start-0 h-100" style="width: 100%;">
+        <div class="d-flex row justify-content-center align-items-center">
+            <div class="col-auto">
+                <div class="row-auto" role="alert" id="notif">
+                    <label id="notif-message"><!-- do not delete --></label>
+                    <button type="button" class="btn-close" id="close-notif"></button>
+                </div>
+
+                <div class="row-auto text-center p-4">
+                    <div class="mb-2">
+                        <h3 class="mx-2 text-center">Authentication</h3>
+                    </div>
+                    <form id="login-form">
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Enter the password</label>
+                            <input type="password" class="form-control text-center" id="password">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-success">login</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

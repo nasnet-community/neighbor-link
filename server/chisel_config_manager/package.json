@@ -1,0 +1,15 @@
+{
+    "name": "chisel-config-manager",
+    "version": "1.1.2",
+    "description": "A configuration manager for Chisel.",
+    "main": "chisel_config_manager.js",
+    "scripts": {
+      "start": "node chisel_config_manager.js"
+    },
+    "author": "routro",
+    "license": "ISC",
+    "dependencies": {
+      "express": "^4.17.1"
+    }
+  }
+  

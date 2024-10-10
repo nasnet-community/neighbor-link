@@ -1,0 +1,27 @@
+config nodogsplash
+  option enabled 1
+  option fwhook_enabled '1'
+  option gatewayinterface 'brlan-2'
+  option gatewayname 'Free Internet'
+  option maxclients '100'
+  option preauthidletimeout '400'
+  option authidletimeout '120'
+  option sessiontimeout '0'
+  option checkinterval '1200'
+  option binauth '/usr/bin/binauth.sh'
+
+  # Block access to router's SSH and management interface after authentication
+  list authenticated_users 'block tcp port 22'
+  list authenticated_users 'block tcp port 80'
+
+  # Allow all other traffic for authenticated users
+  list authenticated_users 'allow all'
+
+  # Define fw_mark_authenticated for compatibility with PBR
+  option fw_mark_authenticated '30000'
+
+  # Define fw_mark_trusted (if you have trusted MACs)
+  option fw_mark_trusted '20000'
+
+  # Define fw_mark_blocked for unauthenticated users
+  option fw_mark_blocked '10000'

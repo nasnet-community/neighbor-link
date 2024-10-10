@@ -1,0 +1,52 @@
+body {
+    padding-top: 32px;
+}
+
+
+#notif {
+    display: none;
+    justify-content: space-between;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#vpn-status-flash {
+    visibility: hidden;
+}
+
+.scroll-table {
+    height: 124px;
+    overflow: scroll;
+}
+.scroll-table td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.wifi-element-row {
+    border: 1px solid white;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .wifi-element-row:hover {
+    background-color: #ffffff8e;
+    color: black;
+  }
+
+  :dir(rtl) {
+    font-family: 'Vazirmatn', sans-serif;
+  }

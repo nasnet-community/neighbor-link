@@ -1,0 +1,259 @@
+# Run setup script
+# This script execute once at the device startup.
+
+# last 2 letter of  mac address. added to the SSID
+IDENTIFIER=$(cat /sys/class/net/eth0/address | awk -F ':' '{print $6}');
+CLIENT_KEY=$(cat /sys/class/net/eth0/address | md5sum | awk '{print $1}')
+
+#################################################################################
+#-------------< Firmware Versioning
+#################################################################################
+if ! [ -f /VERSION ]; then
+    version=$(uci -q get routro.firmware.version)
+    if [ -z $version ] ; then
+        echo "active_version=0.0.0" > /VERSION
+    else
+        echo "active_version=$version" > /VERSION  
+    fi
+fi
+
+
+#################################################################################
+#-------------< Device Conf
+#################################################################################
+uci set routro.remote.identifier="$IDENTIFIER"
+uci set routro.remote.key="$CLIENT_KEY"
+uci set routro.remote.host="-"
+uci set routro.remote.port="-"
+uci set routro.outlinegate.maphost="-"
+uci set routro.remote.accesshost="-"
+
+
+#################################################################################
+#-------------< Network 
+#################################################################################
+    # Set default lan IP to 151 range
+uci set network.lan.ipaddr='192.168.151.1'
+    # Set default wan metric
+uci set network.wan.metric='20'
+uci set network.wan6.metric='1'
+    # Set up wwan interface
+uci set network.wwan=interface
+uci set network.wwan.proto='dhcp'
+uci set network.wwan.metric='10'
+
+# uci set network.wan.peerdns='0'
+# uci set network.wan.dns='8.8.8.8'
+
+# uci set network.wwan.peerdns='0'
+# uci set network.wwan.dns='8.8.8.8'
+
+    # Set up bridge device
+uci set network.brlan2=device
+uci set network.brlan2.name='brlan-2'
+uci set network.brlan2.type='bridge'
+    # Set up Guest interface
+uci set network.Guest=interface
+uci set network.Guest.proto='static'
+uci set network.Guest.ipaddr='192.168.3.1'
+uci set network.Guest.netmask='255.255.255.0'
+uci set network.Guest.device='brlan-2'
+
+
+#################################################################################
+#-------------< Wireless
+#################################################################################
+for i in 0 1
+do
+    uci -q get wireless.radio$i
+    if [ $? == 0 ]
+    then
+        RADIO=radio$i
+        BAND=$(uci -q get wireless.radio$i.band)
+
+        # Enable radio
+        uci set wireless.$RADIO.disabled='0'
+
+        # Set up default $RADIO configuration
+        uci set wireless.default_$RADIO=wifi-iface
+        uci set wireless.default_$RADIO.device="$RADIO"
+        uci set wireless.default_$RADIO.network='lan'
+        uci set wireless.default_$RADIO.mode='ap'
+        uci set wireless.default_$RADIO.ssid="OpenWrt-$BAND"
+        uci set wireless.default_$RADIO.disabled='0'
+        uci set wireless.default_$RADIO.encryption='psk2'
+        uci set wireless.default_$RADIO.key='goodlife'
+        uci set wireless.default_$RADIO.ifname="wlanap_$BAND"
+
+        # Set up wifinet1 configuration
+        uci set wireless.client_$BAND=wifi-iface
+        uci set wireless.client_$BAND.device="$RADIO"
+        uci set wireless.client_$BAND.mode='sta'
+        uci set wireless.client_$BAND.network='wwan'
+        uci set wireless.client_$BAND.encryption='psk2'
+        uci set wireless.client_$BAND.ifname="wlansta_$BAND"
+        uci set wireless.client_$BAND.disabled='1'
+        uci set wireless.client_$BAND.ssid='ChangeMe'
+        uci set wireless.client_$BAND.key='12345678'
+
+            # Set up wifinet3 configuration
+        uci set wireless.guest_$BAND=wifi-iface
+        uci set wireless.guest_$BAND.device="$RADIO"
+        uci set wireless.guest_$BAND.mode='ap'
+        uci set wireless.guest_$BAND.network='Guest'
+        uci set wireless.guest_$BAND.encryption='psk2'
+        uci set wireless.guest_$BAND.key='goodlife'
+        uci set wireless.guest_$BAND.ssid="Guest-WiFi-$BAND"
+        uci set wireless.guest_$BAND.disabled='0'
+        uci set wireless.guest_$BAND.ifname="wlanguest_$BAND"
+
+    fi
+done
+    
+
+
+
+#################################################################################
+#-------------< Firewall
+#################################################################################
+# uci rename firewall.@zone[0]="lan"
+# uci rename firewall.@zone[1]="wan"
+
+#     # Set up firewall zone for the 'wwan' network
+# uci set firewall.wwanzone=zone
+# uci set firewall.wwanzone.name='wwanzone'
+# uci add_list firewall.wwanzone.network='wwan'
+# uci set firewall.wwanzone.input='REJECT'
+# uci set firewall.wwanzone.output='ACCEPT'
+# uci set firewall.wwanzone.forward='REJECT'
+# uci set firewall.wwanzone.masq='1'
+# uci set firewall.wwanzone.mtu_fix='1'
+
+
+#     # Set up firewall zone for the 'wg0' network
+# uci set firewall.wg0zone=zone
+# uci set firewall.wg0zone.name='wg0zone'
+# uci add_list firewall.wg0zone.network='wg0'
+# uci set firewall.wg0zone.input='ACCEPT'
+# uci set firewall.wg0zone.output='ACCEPT'
+# uci set firewall.wg0zone.forward='REJECT'
+# uci set firewall.wg0zone.masq='1'
+# uci set firewall.wg0zone.mtu_fix='1'
+
+#     # Set up forwarding from 'lan' to 'wwan'
+# uci set firewall.lan_to_wwan=forwarding
+# uci set firewall.lan_to_wwan.src='lan'
+# uci set firewall.lan_to_wwan.dest='wwanzone'
+
+#     # Set up forwarding from 'lan' to 'wg0'
+# uci set firewall.lan_to_wg0=forwarding
+# uci set firewall.lan_to_wg0.src='lan'
+# uci set firewall.lan_to_wg0.dest='wg0zone'
+
+#     # Set up firewall zone for the 'Guest' network
+# uci set firewall.guest_zone=zone
+# uci set firewall.guest_zone.name='guest_zone'
+# uci set firewall.guest_zone.input='ACCEPT'
+# uci set firewall.guest_zone.output='ACCEPT'
+# uci set firewall.guest_zone.forward='ACCEPT'
+# uci add_list firewall.guest_zone.network='Guest'
+#     # Set up forwarding from 'guest_zone' to 'wan'
+# uci set firewall.forwarding_guest_to_wan=forwarding
+# uci set firewall.forwarding_guest_to_wan.src='guest_zone'
+# uci set firewall.forwarding_guest_to_wan.dest='wan'
+#     # Set up DNS Redirect Rule
+# uci add firewall redirect
+# uci set firewall.@redirect[-1].name='Redirect DNS to 8.8.8.8'
+# uci set firewall.@redirect[-1].src='lan'               # LAN source (br-lan)
+# uci set firewall.@redirect[-1].src_dport='53'          # DNS port 53
+# uci set firewall.@redirect[-1].proto='tcp udp'         # Both TCP and UDP
+# uci set firewall.@redirect[-1].dest_port='53'          # Destination port: 53
+# uci set firewall.@redirect[-1].target='DNAT'           # Redirection (DNAT)
+# uci set firewall.@redirect[-1].dest_ip='8.8.8.8'       # Google's DNS
+# # Set the rule position to ensure it has higher priority (insert before other rules)
+# uci reorder firewall.@redirect[-1]=10
+
+
+#################################################################################
+#-------------< DHCP
+#################################################################################
+    # Set up DHCP configuration for the 'Guest' interface
+uci set dhcp.Guest=dhcp
+uci set dhcp.Guest.interface='Guest'
+uci set dhcp.Guest.start='100'
+uci set dhcp.Guest.limit='150'
+uci set dhcp.Guest.leasetime='12h'
+uci set dhcp.Guest.dhcpv4='server'
+#--------------------------------------
+
+#################################################################################
+#-------------< Tinyproxy
+#################################################################################
+RANDOMPASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 10)
+USER=iReach$(hexdump -n 2 -e '/2 "%u"' /dev/urandom)
+uci set tinyproxy.@tinyproxy[0].BasicAuth="$USER $RANDOMPASS"
+#--------------------------------------
+
+
+#################################################################################
+#-------------< uhhtpd
+#################################################################################
+uci set uhttpd.main.listen_http='192.168.151.1:80'
+uci add_list uhttpd.main.setenv='Cache-Control=no-store, no-cache, must-revalidate, max-age=0'
+uci add_list uhttpd.main.setenv='Pragma=no-cache'
+uci add_list uhttpd.main.setenv='Expires=-1'
+
+uci add uhttpd uhttpd
+uci rename uhttpd.@uhttpd[1]="portal"
+uci set uhttpd.portal.listen_http='192.168.3.1:2027'
+uci set uhttpd.portal.home='/www/portal'
+uci add_list uhttpd.portal.lua_prefix='/auth=/www/portal/auth.lua'
+uci add_list uhttpd.portal.setenv='Cache-Control=no-store, no-cache, must-revalidate, max-age=0'
+uci add_list uhttpd.portal.setenv='Pragma=no-cache'
+uci add_list uhttpd.portal.setenv='Expires=-1'
+#--------------------------------------
+
+#################################################################################
+#-------------< sshkey
+#################################################################################
+uci set dropbear.@dropbear[0].PasswordAuth='off'
+uci set dropbear.@dropbear[0].RootPasswordAuth='off'
+chmod 600 /etc/dropbear/authorized_keys 
+#--------------------------------------
+
+
+##-------------< Commit All changes
+uci commit
+
+
+#################################################################################
+#-------------< Sysctl
+#################################################################################
+echo "net.ipv4.conf.wg0.rp_filter = 2" >> /etc/sysctl.conf
+
+
+##-------------< Executable
+# All file inside /etc/init.d
+for F in /etc/init.d/* ; do chmod +x $F; done
+
+# All file inside /usr/bin
+for F in /usr/bin/* ; do chmod +x $F; done
+
+chmod +x /etc/hotplug.d/iface/99-custom
+chmod +x /www/cgi-bin/api
+chmod +x /www/portal/auth.lua
+
+/etc/init.d/crontab start
+/etc/init.d/crontab enable
+
+/etc/init.d/wifipass start
+/etc/init.d/wifipass enable
+
+/etc/init.d/tinyproxy stop
+/etc/init.d/tinyproxy disable
+
+/etc/init.d/uhttpd restart
+/etc/init.d/dropbear restart 
+
+rm -f /etc/rc.local
+reboot

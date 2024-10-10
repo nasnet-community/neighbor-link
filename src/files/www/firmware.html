@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Firmware</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="bootstrap.bundle.min.js" defer></script>
+    <script type="text/javascript" src="loading.js" defer></script>
+    <script type="text/javascript" src="ubus.js" defer></script>
+    <script type="text/javascript" src="firmware.js" defer></script>
+    <script type="text/javascript" src="heartBeat.js" defer></script>
+    
+</head>
+<body>
+    <div class="container">
+        <!-- Button container with border -->
+        <div class="row button-container justify-content-between mt-3 align-items-center">
+            <div class="col-auto">
+                <a id="back-btn-href" href="dashboard.html" class="btn btn-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+                    </svg>
+                    <span id="back-btn-text">Back to Dashboard</span>
+                </a>
+            </div>
+            <div class="col text-center">
+                <h3 class="mb-0">Firmware Upgrade</h2>
+            </div>
+        </div>
+        
+        <!-- Note and How to  -->
+        <div class="row justify-content-center mt-3">
+            
+            <!-- Note -->
+            <div class="alert alert-info alert-dismissible fade show" role="alert" >
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+                <strong>Note:</strong>
+                <br>After Upgrade You will be disconnected from Open-Router
+                <br>Do not Unplug the Router During the update
+            </div>
+            
+            <!-- How to  -->
+            <div class="alert alert-light" role="alert">
+                <strong>Steps:</strong>
+                <ul>
+                    <li>Check for update</li>
+                    <li>Press "Update Now" if there is a new version</li>
+                </ul>
+            </div>
+        </div>
+    
+        <div id="upgrade-part" class="" data-bs-parent="#myAccordion">
+            <div class="container">
+                <div class="row d-flex justify-content-center mb-3 mt-3">
+                    <button type="button" class="col-auto btn btn-primary" id="check-update" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+                          </svg>
+                        Check for Update
+                    </button>
+                    
+                    <button type="button" class="col-auto btn btn-success mx-2 d-none" id="do-update">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M3.5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 0 0 1h2A1.5 1.5 0 0 0 14 9.5v-8A1.5 1.5 0 0 0 12.5 0h-9A1.5 1.5 0 0 0 2 1.5v8A1.5 1.5 0 0 0 3.5 11h2a.5.5 0 0 0 0-1z"/>
+                            <path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708z"/>
+                        </svg>
+                        Update Now
+                    </button>
+                </div>
+                <div class="row d-flex justify-content-center text-center my-3">
+                    <label class="p-2 text-info" id="update-notif">Please press the "Check for Update" button</label>
+                </div>
+                <div class="alert alert-warning mb-5" role="alert" id="update-waiting-alert">
+                    Update will take about 10 minutes, Please do not discounnect the power cable, please reconnect to the router after 10 minites and reload this page.
+                </div>
+            </div>
+        </div>
+
+        <div id="overlay" class="display=none flex-column align-items-center mb-3">
+            <div class="spinner-border text-light mb-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="fs-4 px-4 py-3" role="message">
+                <h6 id="overlay_message" class="text text-light">
+                 Loading...   
+                </h6>
+            </div>
+        </div> 
+     
+        <div class="toast-container position-fixed  top-0 start-0 text-center" style="width: 100%;">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000" style="width: 100%">
+                <div class="alert alert-danger m-0" role="alert">You're not connected to router!</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

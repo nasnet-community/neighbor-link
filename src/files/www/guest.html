@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Step 4</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="bootstrap.bundle.min.js" defer></script>
+    <script type="text/javascript" src="loading.js" defer></script>
+    <script type="text/javascript" src="ubus.js" defer></script>
+    <script type="text/javascript" src="guest.js" defer></script>
+    <script type="text/javascript" src="heartBeat.js" defer></script>
+    
+</head>
+<body>
+    <div class="container">
+        <!-- Button container with border -->
+        <div class="row button-container justify-content-between mt-3 align-items-center">
+            <div class="col-auto">
+                <a id="back-btn-href" href="vpn.html" class="btn btn-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+                    </svg>
+                    <span id="back-btn-text">Previous</span>
+                </a>
+            </div>
+            <div class="col text-center">
+                <h6 class="mb-0">Step 4: Access for Neighbors</h6>
+            </div>
+            <div class="col-auto">
+                <a href="dashboard.html" class="btn btn-link">Dashboard</a>
+                <a href="infinite_reach.html" class="btn btn-light">Next 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8m-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5"/>
+                </svg>
+            </a>
+            </div>
+        </div>
+        
+        <!-- Note and How to  -->
+        <div class="row justify-content-center mt-3">
+            
+            <!-- Note -->
+            <div class="alert alert-info alert-dismissible fade show mx-1" role="alert" >
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+                <div>
+                    In this step, we first configure the Guest Wi-Fi settings to allow neighbors to access Starlink. Then, we create individual accounts for each neighbor (user) with a personal username and password.
+                </div>
+                <br>
+                <div dir="rtl">
+                    در این مرحله، در ابتدا وایفای Guest را برای دسترسی همسایگان به استارلینک تنظیم می‌کنیم. بعد برای هر کدام از همسایگان (کاربرها) یک حساب شخصی همراه با نام کاربری و پسورد می‌سازیم.
+                </div>
+            </div>
+            
+            <!-- How to  -->
+            <div class="row alert alert-light mx-1" role="alert">
+                <strong>Instruction:</strong>
+                <div class="col-auto">
+                    <ul>
+                        <li>Make sure the Guest Wi-Fi is enabled.</li>
+                        <li>You can change the guest network name. (Your neighbors will use this SSID to connect to the internet.)</li>
+                        <li>Choose a password.</li>
+                        <li>Go to User Management and create a unique username and password for each neighbor (user).</li>
+                        <li>Provide the SSID, password, and individual usernames and passwords to your neighbors. Once they are connected to your network, they will need to visit the following portal link to authenticate using their username and password: 
+                            <span class="text text-info font-monospace fw-lighter" style="font-size: 12px;">http://192.168.3.1:2027/splash.html</span>
+                        </li>
+                        <li>You can review the user statistics at the bottom of the page.</li>
+
+
+                    </ul>
+                </div>
+                <div class="col" dir="rtl">
+                    <ul>
+                        <li>مطمئن شوید که Guest Wi-Fi فعال باشد.</li>
+                        <li>می‌توانید نام شبکه مهمان را تغییر دهید. (کاربرها از این SSID برای اتصال به اینترنت استفاده خواهند کرد.)</li>
+                        <li>یک پسورد برای شبکه مهمان انتخاب کنید.</li>
+                        <li>به User Management بروید و برای هر همسایه (کاربر) نام کاربری و پسورد مختص خود را بسازید.</li>
+                        <li>اطلاعات وای‌فای (SSID و پسورد) و نام کاربری و پسورد هر کاربر را با آن‌ها به اشتراک بگذارید. بعد از اتصال، آن‌ها باید به لینک زیر مراجعه کرده و نام کاربری و پسورد خود را وارد کنند: 
+                            <span class="text text-info font-monospace fw-lighter" style="font-size: 12px;">http://192.168.3.1:2027/splash.html</span>
+                        </li>
+                        <li>می‌توانید آمار مصرف کاربران را در پایین صفحه مشاهده کنید.</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-warning mt-5">Stauts</h2>
+        <hr>
+        <div class="row">
+            <div class="col">Guest wifi status: </div>
+            <div class="col">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="guest-wifi-enable">
+                    <label class="form-check-label" for="guest-wifi-enable" id="guest-wifi-enable-label">Disable</label>
+                </div>
+            </div>
+        </div>
+
+        <div id="other-parts" class="d-block">
+            <h2 class="text-warning mt-5">Config</h2>
+            <hr>
+            <div class="row-auto container mt-4">
+                <div id="alertContainer" style="max-width: 25rem;"></div>
+            </div>
+            <div class="row">
+                <div class="col-auto">
+                    <label for="guest-ssid" class="form-label">SSID</label>
+                    <input type="text" class="form-control" id="guest-ssid">
+                    <div class="form-text">Username only accept english charechter</div>
+                </div>
+                <div class="col-auto">
+                    <label for="guest-password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="guest-password">
+                    <div class="form-text">Password must be in english and has 8 characters .</div>
+                </div>
+                <div class="d-flex col-auto text-center justify-content-center pb-4 pt-1">
+                    <button type="button" class="btn btn-success mt-4" id="guest-update">Update</button>
+                </div>
+            </div>
+            
+            <h2 class="text-warning mt-5">User Management</h2>
+            <hr>
+            <div class="d-flex row container justify-content-center">
+                <div class="col-auto text-center" >
+                    <button class="btn btn-outline-light px-4 py-3" id="user-management">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                        </svg>
+                        Add/Remove Users
+                    </button>
+                </div>
+            </div>
+
+            
+            <h2 class="text-warning mt-5">Statistics</h2>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th scope="row" class="text-info">Connected Devices:</th>
+                            <td>
+                                <label id="guest-connected-devices" class="text-body">Unknown</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-info">Total Send:</th>
+                            <td>
+                                <label id="guest-connected-total-send" class="text-body">Unknown</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-info" >Total Receive:</th>
+                            <td>
+                                <label id="guest-connected-total-receive" class="text-body">Unknown</label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                    <table class="table table-responsive">
+                        <thead>
+                        <tr>
+                            <td  class="text-info">Mac Address</td>
+                            <td  class="text-info">Usage (MB)</td>
+                        </tr>
+                        </thead>
+                        <tbody id="connected-clients-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+                           
+    </div>
+    <div id="overlay" class="display=none flex-column align-items-center mb-3">
+        <div class="spinner-border text-light mb-2" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="fs-4 px-4 py-3" role="message">
+            <h6 id="overlay_message" class="text text-light">
+             Loading...   
+            </h6>
+        </div>
+    </div> 
+ 
+    <div class="toast-container position-fixed  top-0 start-0 text-center" style="width: 100%;">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000" style="width: 100%">
+            <div class="alert alert-danger m-0" role="alert">You're not connected to router!</div>
+        </div>
+    </div>
+</body>
+</html>

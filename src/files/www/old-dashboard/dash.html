@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="bootstrap.bundle.min.js" defer></script>
+    <script type="text/javascript" src="script.js" defer></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+
+                <div role="alert" id="notif">
+                    <label id="notif-message"><!-- do not delete --></label>
+                    <button type="button" class="btn-close" id="close-notif"></button>
+                </div>
+            
+                <div class="accordion" id="myAccordion">
+                    <!-- Internet Connection  -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseThree">
+                                <!-- <svg viewBox="0 0 1024 1024" class="dashboard-icon15" width="24">
+                                    <path d="M86 938l852-852v256h-170v596h-682zM854 938v-84h84v84h-84zM854 768v-342h84v342h-84z"></path>
+                                </svg> -->
+                                <svg viewBox="0 0 805.1565714285713 1024" class="login-icon" width="24">
+                                    <path d="M219.429 768c0 60.571-49.143 109.714-109.714 109.714s-109.714-49.143-109.714-109.714 49.143-109.714 109.714-109.714 109.714 49.143 109.714 109.714zM512 838.286c0.571 10.286-2.857 20-9.714 27.429-6.857 8-16.571 12-26.857 12h-77.143c-18.857 0-34.286-14.286-36-33.143-16.571-174.286-154.857-312.571-329.143-329.143-18.857-1.714-33.143-17.143-33.143-36v-77.143c0-10.286 4-20 12-26.857 6.286-6.286 15.429-9.714 24.571-9.714h2.857c121.714 9.714 236.571 62.857 322.857 149.714 86.857 86.286 140 201.143 149.714 322.857zM804.571 839.429c0.571 9.714-2.857 19.429-10.286 26.857-6.857 7.429-16 11.429-26.286 11.429h-81.714c-19.429 0-35.429-14.857-36.571-34.286-18.857-332-283.429-596.571-615.429-616-19.429-1.143-34.286-17.143-34.286-36v-81.714c0-10.286 4-19.429 11.429-26.286 6.857-6.857 16-10.286 25.143-10.286h1.714c200 10.286 388 94.286 529.714 236.571 142.286 141.714 226.286 329.714 236.571 529.714z"></path>
+                                </svg>
+                                &nbsp;&nbsp;
+                                <b>Step 1 :</b>
+                                &nbsp;&nbsp;
+                                Setup Starlink internet connection
+                                &nbsp;&nbsp;
+                                <span class="badge bg-secondary" id="internet-status">No Internet</span>
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse show" data-bs-parent="#myAccordion">
+                            <div class="accordion-body">
+                                <div class="mb-3 row">
+                                    <div class="row">
+                                        <div class="col">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr>
+                                                        <td scope="row">Network Interface:</td>
+                                                        <td>
+                                                            <label id="network-interface" class="badge bg-info text-body">Unknown</label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="row">Status:</td>
+                                                        <td>
+                                                            <label id="network-interface-status" class="badge bg-info text-body">Unknown</label>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr>
+                                                        <td scope="row">IP:</td>
+                                                        <td>
+                                                            <label id="network-interface-ip" class="badge bg-info text-body">0.0.0.0</label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="row">Gateway:</td>
+                                                        <td>
+                                                            <label id="network-interface-dns" class="badge bg-info text-body">0.0.0.0</label>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class="internet-source-global-wifi">
+                                    <hr>
+                                    <div class="mb-3">
+                                        <div class="mb-3">
+                                            <label for="internet-source-global-connect-to" class="form-label" size="3">Connect To:</label>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <select class="form-select border border-primary" id="internet-source-global-connect-to" aria-label="Default select example">
+                                                        <option disabled selected>Please choose</option>
+                                                        <!-- <option value="1">option 1</option>
+                                                        <option value="2">option 2</option> -->
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <button class="btn btn-primary internet-source-global-wifi" id="scan-wifi-global-btn">
+                                                        <svg viewBox="0 0 1024 1024" class="dashboard-icon17" width="24" fill="#fff">
+                                                            <path d="M214 554q124-122 299-122t297 122l-84 86q-36-36-99-62t-115-26-115 26-99 62zM384 726q54-54 128-54t128 54l-128 128zM42 384q196-194 471-194t469 194l-86 86q-160-158-384-158t-384 158z"></path>
+                                                        </svg>
+                                                        &nbsp;&nbsp;
+                                                        Scan Wifi
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="internet-source-global-ssid" class="form-label">SSiD</label>
+                                                <input type="text" class="form-control" id="internet-source-global-ssid">
+                                            </div>
+                                            <div class="col">
+                                                <label for="internet-source-global-pass" class="form-label">Passphrase</label>
+                                                <input type="password" class="form-control" id="internet-source-global-pass">
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="alert alert-warning" role="alert" id="wifi-connect-notif">
+                                        By pressing the "Connect" button you will be disconnected from Wifi, So please reconnect to the Openwrt after 20sec and reload this page
+                                    </div>
+                                </div>
+                                
+                                <button type="button" id="internet-source-global-wifi-connect" class="btn btn-success d-none " >Connect to Wifi</button>
+                                <button type="button" id="internet-source-global-reload" class="btn btn-outline-secondary d-inline"  >Reload</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VPN  -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <svg viewBox="0 0 1024 1024" class="dashboard-icon11" width="24">
+                                    <path d="M512 42l384 172v256q0 178-110 325t-274 187q-164-40-274-187t-110-325v-256z"></path>
+                                </svg>
+                                &nbsp;&nbsp;
+                                <b>Step 2 :</b>
+                                &nbsp;&nbsp;
+                                VPN Status
+                                &nbsp;&nbsp;
+                                <span class="badge bg-secondary" id="vpn-status">Need Attention</span>
+                                &nbsp;&nbsp;
+                                <div id="vpn-status-flash" class="spinner-grow spinner-grow-sm text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
+                            <div class="accordion-body">
+
+                                <div class="row mb-3 mt-3 align-items-center" id="if-no-config" class="d-none">
+                                    <div class="col">
+                                        <button type="button" class="btn btn-outline-secondary" id="get-vpn-config" disabled="true">Get Config</button>
+                                    </div>
+                                    <div class="col">
+                                        <label class="badge text-bg-light mx-3 p-3" id="vpn-config-notif" style="display: none;">You already have VPN config</label>
+                                    </div>
+                                    
+                                </div>
+
+                               <div id="if-has-config">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                        <label class="form-check-label" for="flexSwitchCheckDefault" id="vpnSwitchLable">Disconnected</label>
+                                    </div>
+                                    <div class="alert alert-warning" role="alert">
+                                        All traffics will path through VPN, when the VPN is connected.
+                                    </div>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="overlay" class="display=none flex-column align-items-center mb-3">
+        <div class="spinner-border text-light mb-2" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="text text-light fs-4" id="overlay_message" role="message">
+            Loading...
+        </div>
+    </div> 
+    <div class="toast-container position-fixed top-0 start-0" style="width: 100%">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000" style="width: 100%">
+            <div class="alert alert-danger m-0" role="alert">You're not connected to router!</div>
+        </div>
+      </div>
+</body>
+</html>

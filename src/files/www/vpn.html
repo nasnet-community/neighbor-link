@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Step 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="bootstrap.bundle.min.js" defer></script>
+    <script type="text/javascript" src="bootstrap.bundle.min.js" defer></script>
+    <script type="text/javascript" src="loading.js" defer></script>
+    <script type="text/javascript" src="ubus.js" defer></script>
+    <script type="text/javascript" src="vpn.js" defer></script>
+    <script type="text/javascript" src="heartBeat.js" defer></script>
+    
+</head>
+<body>
+    <div class="container">
+        <!-- Button container with border -->
+        <div class="row button-container justify-content-between mt-3 align-items-center">
+            <div class="col-auto">
+                <a id="back-btn-href" href="ethernet.html" class="btn btn-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+                    </svg>
+                    <span id="back-btn-text">Previous</span>
+                </a>
+            </div>
+            <div class="col text-center">
+                <h6 class="mb-0">Step 3: VPN Connection</h6>
+            </div>
+            <div class="col-auto">
+                <a href="dashboard.html" class="btn btn-link">Dashboard</a>
+                <a href="guest.html" class="btn btn-light">Next 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8m-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5"/>
+                </svg>
+            </a>
+            </div>
+        </div>
+        
+        <!-- Note and How to  -->
+        <div class="row justify-content-center mt-3">
+            
+            <!-- Note -->
+            <div class="alert alert-info alert-dismissible fade show mx-1" role="alert" >
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+                <div>
+                    In this step, we configure the VPN. Using a VPN is necessary to hide the IP address of your autonomous internet source (e.g., Starlink). In this step, Split Tunneling will also be automatically configured, which separates domestic and international IP traffic. Please be patient while following the instructions in this step!
+                </div>
+                <br>
+                <div dir="rtl">
+                    در این مرحله وی‌پی‌ان را پیکربندی می‌کنیم. برای پنهان کردن آی‌پی اینترنت استارلینک (یا هر منبع اینترنتی دیگر)، نیاز به وی‌پی‌ان دارید. در انتهای این مرحله همچنین Split Tunneling به‌صورت خودکار پیکربندی می‌شود تا مسیر آی‌پی‌های داخلی و بین‌المللی از هم جدا شود. هنگام اجرای دستورالعمل‌های این مرحله لطفا صبور باشید!
+                </div>
+            </div>
+            
+            <!-- How to  -->
+            <div class="row alert alert-light mx-1" role="alert">
+                <strong>Instruction:</strong>
+                <div class="col-auto">
+                    <ul>
+                        <li>Obtain a Wireguard config.</li>
+                        <li>Copy the Wireguard config into the box below.</li>
+                        <li>Press the Set Wireguard Config button. You may need to wait up to one minute.</li>
+                        <li>Turn the VPN On. You might need to wait up to three minutes for the IP to change. Even after toggling to On, you may still need to wait for the IP update.</li>
+                        <li>Check your internet connection. If disconnected, toggle the VPN Off and On again, then wait for 20 seconds.</li>
+                        <li>Once everything is working properly, click Next.</li>
+
+                    </ul>
+                </div>
+                <div class="col" dir="rtl">
+                    <ul>
+                        <li>یک کانفیگ وایرگارد تهیه کنید.</li>
+                        <li>کانفیگ را در باکس پایین کپی کنید.</li>
+                        <li>روی دکمه Set Wireguard Config کلیک کنید. ممکن است تا یک دقیقه منتظر بمانید.</li>
+                        <li>وی‌پی‌ان را روشن کنید. ممکن است لازم باشد تا سه دقیقه صبر کنید تا آی‌پی تغییر کند. حتی بعد از تغییر به On ممکن است لازم باشد برای تغییر آی‌پی بیشتر صبر کنید.</li>
+                        <li>از اتصال اینترنت خود مطمئن شوید. اگر اتصال قطع بود، وی‌پی‌ان را خاموش و دوباره روشن کنید و ۲۰ ثانیه صبر کنید.</li>
+                        <li>اگر همه چیز درست کار می‌کند، روی Next کلیک کنید.</li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        
+
+        <div id="config-part" class="d-flex row container justify-content-center">
+            <h6 class="row text text-info mb-0"> Put the Wireguard config here</h6>
+            <div class="row mb-2">
+                <label for="wireguard-config" class="form-label"></label>
+                <textarea class="form-control" name="wgconfig" id="wireguard-config" rows="3"></textarea>
+            </div>
+            
+            <div class="col-auto text-center" >
+                <button class="btn btn-outline-light px-4 py-3 mt-2" id="get-config">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                        <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                    </svg>
+                    Set Wireguard Config
+                </button>
+                <h6 id="config-status" class="pt-2 text-warning">Please make sure the device is connected to Starlink and click on Button</h6>
+            </div>
+        </div>
+
+        <div id="vpn-part" class="d-flex row container justify-content-center align-items-center py-3 ">
+            <div class="row" style="max-width: 180px;">
+                <button class="btn btn-outline-danger px-2 py-1 my-3" id="change-config" >
+                    Change Config
+                </button>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-auto text-center px-4 py-4 border border-primary rounded-4" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="red" class="bi bi-shield-fill 6" viewBox="0 0 16 16" id="vpn-shield">
+                        <path d="M5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+                    </svg>
+                    <div id="connection-status">Disconnected</div>
+                    
+                    <div class="pt-3">
+                        <input type="radio" class="btn-check" name="options-base" id="vpn-off" autocomplete="off"checked>
+                        <label class="btn" for="vpn-off">OFF</label>
+                        <input type="radio" class="btn-check" name="options-base" id="vpn-on" autocomplete="off">
+                        <label class="btn" for="vpn-on">ON</label>
+                    </div>
+                </div>    
+            </div>
+            
+        </div>
+
+        <hr>
+        <div class="row container justify-content-start">
+            <div class="container px-4 text-center">
+                <div class="row gx-5">
+                  <div class="col">
+                   <div class="p-1">Your IP</div>
+                  </div>
+                  <div class="col">
+                    <div class="p-1">Country</div>
+                   </div>
+                  <div class="col">
+                    <div class="p-1">Internet Provider</div>
+                  </div>
+                </div>
+                <div class="row gx-5">
+                    <div class="col">
+                     <div id="ip-address" class="p-1 text-info-emphasis">0.0.0.0</div>
+                    </div>
+                    <div class="col">
+                        <div id="ip-country" class="p-1 text-info-emphasis">Unknown</div>
+                       </div>
+                    <div class="col">
+                      <div id="internet-provider" class="p-1 text-info-emphasis">Checking... </div>
+                    </div>
+                  </div>
+              </div>
+        </div>
+        <hr>
+
+    </div>
+    <div id="overlay" class="display=none flex-column align-items-center mb-3">
+        <div class="spinner-border text-light mb-2" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="fs-4 px-4 py-3" role="message">
+            <h6 id="overlay_message" class="text text-light">
+             Loading...   
+            </h6>
+        </div>
+    </div> 
+ 
+    <div class="toast-container position-fixed  top-0 start-0 text-center" style="width: 100%;">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000" style="width: 100%">
+            <div class="alert alert-danger m-0" role="alert">You're not connected to router!</div>
+        </div>
+    </div>
+</body>
+</html>

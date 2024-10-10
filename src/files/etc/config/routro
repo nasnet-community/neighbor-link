@@ -1,0 +1,38 @@
+config remote 'remote'
+    option enabled '0'
+    option key ''
+    option host ''
+    option port ''
+    option proxyport ''
+    option version '0'
+    option identifier ''
+
+config subscription 'subscription'
+    option subscription_token ''
+    option exprie_at ''
+
+config device_admin 'device_admin'
+    option key 'routro'
+
+config firmware 'firmware'
+    option version '0.0.99'
+
+config outlinegate 'outlinegate'
+    option enabled '0'
+    option originport ''
+    option originhost ''
+    option mapport ''
+    option maphost ''
+
+config ireach 'ireach'
+    option enabled '0'
+    option host '-'
+    option port '-'
+    option hosttype '-'
+    option proxyport '-'
+    option proxyfaceport '-'
+    option outlineport '-'
+    option user '-'
+    option pass '-'
+
+    

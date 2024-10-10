@@ -1,0 +1,16 @@
+config rpcd
+        option socket /var/run/ubus/ubus.sock
+        option timeout 30
+
+config login
+        option username 'root'
+        option password '$p$root'
+        list read '*'
+        list write '*'
+
+config login
+        option username 'routro'
+        #You can generate these with uhttpd -m secret
+        option password '$1$$pnSmUg4O3K/kUup95Gg3E1'
+        list read routrouser
+        list write routrouser

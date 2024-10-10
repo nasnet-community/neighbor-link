@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Step 5</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="bootstrap.bundle.min.js" defer></script>
+    <script type="text/javascript" src="loading.js" defer></script>
+    <script type="text/javascript" src="ubus.js" defer></script>
+    <script type="text/javascript" src="outline.js" defer></script>
+    <script type="text/javascript" src="heartBeat.js" defer></script>
+    
+</head>
+<body>
+    <div class="container">
+        <!-- Button container with border -->
+        <div class="row button-container justify-content-between mt-3 align-items-center">
+            <div class="col-auto">
+                <a id="back-btn-href" href="infinite_reach.html" class="btn btn-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+                    </svg>
+                    <span id="back-btn-text">Back</span>
+                </a>
+            </div>
+            <div class="col text-center">
+                <h6 class="mb-0">Setup Outline Gate</h6>
+            </div>
+
+        </div>
+        
+        <!-- Note and How to  -->
+        <div class="row justify-content-center mt-3">
+            
+            <!-- Note -->
+            <div class="alert alert-info alert-dismissible fade show" role="alert" >
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+                <strong>Outline Gate:</strong> This section assists you in converting Outline keys. By converting the Outline key, the client will connect through the Iran internet and your Starlink to the Outline server. You can use either a free Outline key or your own Outline key for this process.
+            </div>
+            
+            <!-- How to  -->
+            <div class="alert alert-light" role="alert">
+                <strong>Instruction:</strong>
+                <ul>
+                    <li>Copy the Outline key and paste it into the designated converting area.</li>
+                    <li>Click the "Convert" button.</li>
+                    <li>Use the converted configuration displayed in the blue box within the Outline client.</li>
+                    <li>If you are using your own Outline manager, you can configure the new host and port for all of your keys.</li>                    
+                </ul>
+            </div>
+        </div>
+        
+         <!-- Outline Section  -->
+         <div class="row ">
+            <h2 class="text-warning mt-5">Outline:</h2>
+            <hr>
+            <div class="col-auto text-info">
+                <h6 id="outline-origin"></h6>
+            </div>
+            <div class="col-auto text-info">
+                <h6 id="outline-map"></h6>
+            </div>
+        
+            <div class="container mt-2">
+                <div id="alertContainer" ></div>
+            </div>
+
+            <div class="alert alert-primary mt-2" role="alert">
+                <h4 class="alert-heading">Converted Config</h4>
+                <hr>
+                <p  id="out-access-key" class="mb-0 text-wrap text-break fw-lighter">
+                    ss://new-access-key
+                </p>
+            </div>
+
+            <h6 class="text text-info" id="basic-addon1">Past original accesskey here</h6>
+            <div class="input-group mb-4">
+                <input id="access-key" type="text" class="form-control" placeholder="ss://access-key" aria-label="Username" aria-describedby="basic-addon1">
+                <button class="btn btn-primary" type="button" id="outline-convert">Convert</button>
+            </div>
+            <span class="my-4">&nbsp</span>
+            
+        </div>
+
+    </div>
+    <div id="overlay" class="display=none flex-column align-items-center mb-3">
+        <div class="spinner-border text-light mb-2" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="fs-4 px-4 py-3" role="message">
+            <h6 id="overlay_message" class="text text-light">
+             Loading...   
+            </h6>
+        </div>
+    </div> 
+ 
+    <div class="toast-container position-fixed  top-0 start-0 text-center" style="width: 100%;">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000" style="width: 100%">
+            <div class="alert alert-danger m-0" role="alert">You're not connected to router!</div>
+        </div>
+    </div>
+</body>
+</html>

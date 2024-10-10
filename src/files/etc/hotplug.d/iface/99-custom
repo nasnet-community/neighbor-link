@@ -1,0 +1,6 @@
+#!/bin/sh
+[ "$ACTION" = "ifup" -a "$INTERFACE" = "wg0" ] && {
+    logger "Fix IP Route"
+    wg_scripts.sh fix
+    # Add your custom command(s) here
+}

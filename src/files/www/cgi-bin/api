@@ -1,0 +1,109 @@
+#!/usr/bin/lua
+
+-- Utility to decode URL-encoded parameters
+local function url_decode(str)
+    str = string.gsub(str, '+', ' ')
+    str = string.gsub(str, '%%(%x%x)', function(h) return string.char(tonumber(h, 16)) end)
+    return str
+end
+
+local function log_message(msg)
+    local log_file = io.open("/tmp/lua_script.log", "a")
+    log_file:write(os.date("%Y-%m-%d %H:%M:%S") .. " - " .. msg .. "\n")
+    log_file:close()
+end
+
+-- Function to quote a parameter for safe shell usage
+local function quote_param(param)
+    return "'" .. string.gsub(param, "'", "'\\''") .. "'"
+end
+
+local function execute_command(cmd, params)
+    log_message("Executing command: " .. cmd)
+    if cmd ~= "dragon.sh" then
+        return "Error: Unauthorized command", 1
+    end
+    
+    local quoted_params = {}
+    for _, param in ipairs(params) do
+        table.insert(quoted_params, quote_param(param))
+    end
+    
+    local full_cmd = cmd .. " " .. table.concat(quoted_params, " ")
+    log_message("Full command: " .. full_cmd)
+
+    local result = io.popen(full_cmd .. " 2>&1"):read("*a")
+    local exit_code = io.popen("echo $?"):read("*n")
+    
+    log_message("Command result: " .. (result or ""))
+    log_message("Exit code: " .. (exit_code or -1))
+    
+    return result, exit_code
+end
+
+local function read_body()
+    local content_length = tonumber(os.getenv("CONTENT_LENGTH"))
+    if content_length then
+        log_message("Content length: " .. content_length)
+        local body = io.read(content_length)
+        log_message("Body: " .. body)
+        return body
+    end
+    log_message("No content length provided")
+    return nil
+end
+
+local function parse_params(body)
+    local params = {}
+    for k, v in string.gmatch(body, "([^&=]+)=([^&=]+)") do
+        params[url_decode(k)] = url_decode(v)
+    end
+    log_message("Parsed params: " .. table.concat(params, ", "))
+    return params
+end
+
+-- Simple JSON encoding function
+local function json_encode(tbl)
+    local result = {}
+    for k, v in pairs(tbl) do
+        if type(v) == "string" then
+            v = string.gsub(v, '"', '\\"')
+            table.insert(result, string.format('"%s":"%s"', k, v))
+        else
+            table.insert(result, string.format('"%s":%s', k, tostring(v)))
+        end
+    end
+    return "{" .. table.concat(result, ",") .. "}"
+end
+
+print("Content-Type: application/json\n")
+
+local body = read_body()
+local response = {}
+
+if body then
+    local params = parse_params(body)
+    if params.cmd then
+        local cmd = params.cmd
+        local param_str = params.params
+        local param_list = {}
+        if param_str then
+            for param in param_str:gmatch("[^%s]+") do
+                table.insert(param_list, param)
+            end
+        end
+        local output, exit_code = execute_command(cmd, param_list)
+        response.output = output
+        response.exit_code = exit_code
+    else
+        log_message("Error: No command provided")
+        response.error = "Error: No command provided"
+        response.exit_code = 1
+    end
+else
+    log_message("Error: No body provided")
+    response.error = "Error: No body provided"
+    response.exit_code = 1
+end
+
+print(json_encode(response))

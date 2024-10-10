@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Step 5</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="bootstrap.bundle.min.js" defer></script>
+    <script type="text/javascript" src="loading.js" defer></script>
+    <script type="text/javascript" src="ubus.js" defer></script>
+    <script type="text/javascript" src="proxy.js" defer></script>
+    <script type="text/javascript" src="heartBeat.js" defer></script>
+    
+</head>
+<body>
+    <div class="container">
+        <!-- Button container with border -->
+        <div class="row button-container justify-content-between mt-3 align-items-center">
+            <div class="col-auto">
+                <a id="back-btn-href" href="infinite_reach.html" class="btn btn-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+                    </svg>
+                    <span id="back-btn-text">Back</span>
+                </a>
+            </div>
+            <div class="col text-center">
+                <h6 class="mb-0">HTTPS Proxy Config</h6>
+            </div>
+            
+        </div>
+        
+        <!-- Note and How to  -->
+        <div class="row justify-content-center mt-3">
+            
+            <!-- Note -->
+            <div class="alert alert-info alert-dismissible fade show" role="alert" >
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+                <strong>Proxy:</strong> A proxy is a widely-used service to bypass internet restrictions. It can be easily used in your browser or other applications. We provide you with a proxy that includes server-side split tunneling (in the Iran server) for enhanced functionality.
+            </div>
+            
+            <!-- How to  -->
+            <div class="alert alert-light" role="alert">
+                <strong>Instruction:</strong>
+                <ul>
+                    <li>Use the provided information to connect to the proxy.</li>
+                    <li>Please note that the proxy protocol is HTTPS (TLS).</li>
+                    <li>If you require client-side split tunneling for better performance, please refer to this link: [https://bootmortis.github.io/iran-hosted-domains/#/switchyomega]</li>    
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Proxy Info Section -->
+        <h2 class="text-warning mt-5">Proxy Info:</h2>
+        <hr>
+        <div class="row mb-4">
+            <div class="col">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="text-info">Host:</th>
+                        <td>
+                            <label id="i-host" class="text-body">Unknown</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-info">Port:</th>
+                        <td>
+                            <label id="i-port" class="text-body">Unknown</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-info" >Username:</th>
+                        <td>
+                            <label id="i-username" class="text-body">Unknown</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-info" >Password:</th>
+                        <td>
+                            <label id="i-password" class="text-body">Unknown</label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div id="overlay" class="display=none flex-column align-items-center mb-3">
+        <div class="spinner-border text-light mb-2" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="fs-4 px-4 py-3" role="message">
+            <h6 id="overlay_message" class="text text-light">
+             Loading...   
+            </h6>
+        </div>
+    </div> 
+ 
+    <div class="toast-container position-fixed  top-0 start-0 text-center" style="width: 100%;">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000" style="width: 100%">
+            <div class="alert alert-danger m-0" role="alert">You're not connected to router!</div>
+        </div>
+    </div>
+</body>
+</html>

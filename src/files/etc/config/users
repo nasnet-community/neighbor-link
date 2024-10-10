@@ -1,0 +1,3 @@
+config users 'admin'
+        option block '0'
+        option password 'QEkxcY!2&VWyUbe7'

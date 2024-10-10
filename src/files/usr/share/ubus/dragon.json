@@ -1,0 +1,11 @@
+{
+    "custom": {
+        "custom_script": {
+            "method": "run_script",
+            "parameters": {},
+            "returns": {
+                "type": "string"
+            }
+        }
+    }
+}

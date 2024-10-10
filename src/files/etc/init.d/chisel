@@ -1,0 +1,50 @@
+#!/bin/sh /etc/rc.common
+# Example script
+# Copyright (C) 2007 OpenWrt.org
+
+USE_PROCD=1
+
+START=90
+STOP=90
+LOGFILE="/var/log/chisel.log"
+
+start_service() {
+
+    # Retrieve configuration from UCI
+    ENABLED=$(uci get routro.ireach.enabled)
+        if [ "$ENABLED" == "0" ];then
+                echo "Connect -  Service is disabled." >> $LOGFILE
+                exit 0
+        fi
+
+    key=$(uci get routro.ireach.user)
+    port=$(uci get routro.ireach.port)
+    host=$(uci get routro.ireach.host)
+    proxyport=$(uci get routro.ireach.proxyport)
+    password=$(uci get routro.ireach.pass)
+
+    # Check if all required configuration parameters are present
+    if [ -z "$key" ] || [ -z "$port" ] || [ -z "$host" ] || [ -z "$proxyport" ] || [ -z "$password" ]; then
+        echo "chisel_status=MISSING_CONFIG" > /tmp/chisel_status
+        echo "Service is not ready. Missing configuration."
+        exit 0
+    fi
+
+    # Initialize procd instance
+    procd_open_instance
+
+    # Redirect output to a log file using /bin/sh -c
+    procd_set_param command /bin/sh -c "/tmp/chisel client --auth $key:$password ${host}:${port} R:0.0.0.0:$proxyport:127.0.0.1:8888 >> $LOGFILE 2>&1"
+    
+    # Enable respawn if needed
+    procd_set_param respawn
+
+    # Close the procd instance
+    procd_close_instance
+}
+
+stop() {
+    echo "Connect - Stopping chisel service" >> $LOGFILE
+    # Commands to stop/kill the application
+    # killall chisel 2>/dev/null
+}
