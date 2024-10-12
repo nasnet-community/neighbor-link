@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs').promises; // Use promises-based file operations
 const path = require('path');
 const url = require('url');
+const queryString = require('querystring');
 
 // Define the folder where configuration files are stored
 const configFolder = path.join(__dirname, 'config');
@@ -9,8 +10,9 @@ const configFolder = path.join(__dirname, 'config');
 // Create an HTTP server
 const server = http.createServer(async (req, res) => {
   try {
-    const urlData = url.parse(req.url, true);
-    const queryId = urlData.query.id; // Extract the 'id' from the query string
+    const urlData = url.parse(req.url);
+    const queryParams = queryString.parse(urlData.query);
+    const queryId = queryParams.id; // Extract the 'id' from the query string
 
     // Validate the 'id' format (MD5 hash of a MAC address)
     if (!isValidId(queryId)) {
@@ -18,9 +20,10 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    // Path for 'id.conf'
+    // Path for the 'id.conf' file
     const configFile = path.join(configFolder, `${queryId}.conf`);
 
+    // Check if 'id.conf' exists
     if (await fileExists(configFile)) {
       // Read and return the content of the 'id.conf' file
       const data = await fs.readFile(configFile, 'utf8');
@@ -33,14 +36,17 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      // Read and rename 'peerx.conf' to 'id.conf'
+      // Read and return the content of the 'peerx.conf' file
       const data = await fs.readFile(peerConfigFile, 'utf8');
+
+      // Rename 'peerx.conf' to 'id.conf'
       const newConfigFile = path.join(configFolder, `${queryId}.conf`);
-      await fs.rename(peerConfigFile, newConfigFile); // Rename peer config to the specific id
+      await fs.rename(peerConfigFile, newConfigFile);
+
+      // Return the file data
       sendResponse(res, 200, data, 'text/plain');
     }
   } catch (err) {
-    // Handle unexpected errors
     console.error(err);
     sendResponse(res, 500, 'Internal Server Error.');
   }
@@ -58,6 +64,20 @@ server.listen(8080, () => {
  */
 function isValidId(id) {
   return /^[a-fA-F0-9]{32}$/.test(id);
+}
+
+/**
+ * Check if a file exists.
+ * @param {string} filePath Path to the file.
+ * @returns {Promise<boolean>} Returns true if the file exists, otherwise false.
+ */
+async function fileExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -80,25 +100,11 @@ async function findFirstPeerConfig() {
 }
 
 /**
- * Utility function to check if a file exists.
- * @param {string} filePath
- * @returns {Promise<boolean>} Returns true if the file exists, otherwise false.
- */
-async function fileExists(filePath) {
-  try {
-    await fs.access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Send a response to the client.
- * @param {http.ServerResponse} res
- * @param {number} statusCode HTTP status code
- * @param {string} message Response message
- * @param {string} contentType Optional content type, defaults to 'text/plain'
+ * Send an HTTP response.
+ * @param {http.ServerResponse} res HTTP response object.
+ * @param {number} statusCode HTTP status code.
+ * @param {string} message Response message to be sent.
+ * @param {string} [contentType='text/plain'] Optional content type.
  */
 function sendResponse(res, statusCode, message, contentType = 'text/plain') {
   res.statusCode = statusCode;
