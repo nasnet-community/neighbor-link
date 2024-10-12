@@ -10,9 +10,9 @@ const configFolder = path.join(__dirname, 'config');
 // Create an HTTP server
 const server = http.createServer(async (req, res) => {
   try {
-    const urlData = url.parse(req.url);
-    const queryParams = queryString.parse(urlData.query);
-    const queryId = queryParams.id; // Extract the 'id' from the query string
+    const urlData = url.parse(req.url); // Parse the URL
+    const queryParams = queryString.parse(urlData.query); // Parse the query string using querystring
+    const queryId = queryParams["id"]; // Extract the 'id' from the query string
 
     // Validate the 'id' format (MD5 hash of a MAC address)
     if (!isValidId(queryId)) {
