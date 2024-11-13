@@ -68,6 +68,8 @@ option StatFile "/usr/share/tinyproxy/stats.html"
 # for the whole world, but rather limit usage to a smaller goup 
 # of users. They then put the line.
 #
+
+# TODO username and password should be generate in rc.local and replace with them
 option BasicAuth "username password"
 
 #

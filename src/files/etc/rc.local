@@ -74,6 +74,7 @@ do
         # Enable radio
         uci set wireless.$RADIO.disabled='0'
 
+        # TODO: SSID should be st at the first step so set it here but disable it, we will enable it in first setup phaze
         # Set up default $RADIO configuration
         uci set wireless.default_$RADIO=wifi-iface
         uci set wireless.default_$RADIO.device="$RADIO"
@@ -205,6 +206,7 @@ uci add_list uhttpd.main.setenv='Expires=-1'
 
 uci add uhttpd uhttpd
 uci rename uhttpd.@uhttpd[1]="portal"
+# TODO : Set port 80 and add access.portal to be resolve into 192.168.3.1 in dnsmaq
 uci set uhttpd.portal.listen_http='192.168.3.1:2027'
 uci set uhttpd.portal.home='/www/portal'
 uci add_list uhttpd.portal.lua_prefix='/auth=/www/portal/auth.lua'

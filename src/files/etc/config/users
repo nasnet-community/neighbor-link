@@ -1,3 +1,4 @@
+# TODO we do not need a harcoded username and password for captive portal this should also be generated at the first step
 config users 'admin'
         option block '0'
         option password 'QEkxcY!2&VWyUbe7'
