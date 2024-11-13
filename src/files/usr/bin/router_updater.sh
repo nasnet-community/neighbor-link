@@ -5,6 +5,7 @@ deviceModel=$(cat /proc/device-tree/model)
 deviceModel=$(echo "$deviceModel" | awk '{print tolower($0)}' | tr ' ' '_')
 if [ "$1" == "Check" ];then
     # Define the URL for the versioning.txt file
+    # TODO URL SHould be change
     url="https://s3-firmware-releases.s3.us-west-1.amazonaws.com/version-$deviceModel.txt"
 
     # Download versioning.txt using wget
@@ -33,6 +34,7 @@ if [ "$1" == "Check" ];then
     fi
 elif [ "$1" == "Do" ];then
     # Define the URL for the versioning.txt file
+    # TODO URL Should be change
     url="https://s3-firmware-releases.s3.us-west-1.amazonaws.com/version-$deviceModel.txt"
 
     # Download versioning.txt using wget

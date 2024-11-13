@@ -190,7 +190,7 @@ deploy_service() {
                     "}" > /etc/nginx/conf.d/chisel_ssl.conf
 
             # Obtain SSL certificate
-            certbot --nginx -d "$DOMAIN" -m infinite.reach@fillimo.com --agree-tos --non-interactive
+            certbot --nginx -d "$DOMAIN" -m info@${DOMAIN} --agree-tos --non-interactive
 
             # Todo : Setup Squid with split tunneling and parent proxy
             echo ".ir" > /etc/squid/domains.txt

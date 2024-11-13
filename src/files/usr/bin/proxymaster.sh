@@ -1,6 +1,7 @@
 #!/bin/sh
 # Define the file name and the URL to download from
 FILE="/tmp/chisel"
+# TODO : Some arch is not compatible with this
 ARCH=$(uname -m)
 URL="https://holistic-config.s3.us-west-1.amazonaws.com/chisel/chisel_1.10.0_linux_${ARCH}_softfloat"
 

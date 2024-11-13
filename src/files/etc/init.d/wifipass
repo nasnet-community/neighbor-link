@@ -10,7 +10,8 @@ STOP=91
 start_service() {
 
 	procd_open_instance
-	procd_set_param command sh /usr/bin/wrong_wifi_pass_checker.sh
+	# TODO:(low priority) Need attention in case of not availability of starlink or other station ( in this case it automatically disable the radio)
+    procd_set_param command sh /usr/bin/wrong_wifi_pass_checker.sh
     procd_set_param stdout 1
     procd_set_param stderr 1
     procd_close_instance
