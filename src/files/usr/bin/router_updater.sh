@@ -3,10 +3,10 @@
 
 deviceModel=$(cat /proc/device-tree/model)
 deviceModel=$(echo "$deviceModel" | awk '{print tolower($0)}' | tr ' ' '_')
+
+url="https://github.com/nasnet-community/neighbor-link/blob/0f2001dd371d02357248beb61ec9a812d82a743a/builds/version-$deviceModel.txt"
+
 if [ "$1" == "Check" ];then
-    # Define the URL for the versioning.txt file
-    # TODO URL SHould be change
-    url="https://s3-firmware-releases.s3.us-west-1.amazonaws.com/version-$deviceModel.txt"
 
     # Download versioning.txt using wget
     curl "$url" -s -o /versioning.txt.new
@@ -34,8 +34,6 @@ if [ "$1" == "Check" ];then
     fi
 elif [ "$1" == "Do" ];then
     # Define the URL for the versioning.txt file
-    # TODO URL Should be change
-    url="https://s3-firmware-releases.s3.us-west-1.amazonaws.com/version-$deviceModel.txt"
 
     # Download versioning.txt using wget
     curl "$url" -s -o /versioning.txt.new
