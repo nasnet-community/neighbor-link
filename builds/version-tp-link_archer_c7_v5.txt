@@ -1,0 +1,3 @@
+new_version=0.0.267
+firmwareUrl=https://s3-firmware-releases.s3.us-west-1.amazonaws.com/v0.0.267-openwrt-23.05.2-ath79-generic-tplink_archer-c7-v5-squashfs-sysupgrade.bin
+fimwareUrlFactory=https://s3-firmware-releases.s3.us-west-1.amazonaws.com/v0.0.267-openwrt-23.05.2-ath79-generic-tplink_archer-c7-v5-squashfs-factory.bin
