@@ -57,11 +57,8 @@ jobs:
             body: |
                 This is a release for the Neighbor Link Firmware.
 
-
-
       - name: Attach Artifacts to Release
         uses: svenstaro/upload-release-action@v2
-        if: github.event_name == 'release'
         with:
             repo_token: ${{ secrets.GITHUB_TOKEN }}
             file: artifacts/*
