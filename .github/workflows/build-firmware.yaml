@@ -1,0 +1,19 @@
+name: Build the neighbor link firmware
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up environment
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y curl build-essential libncurses-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip python3 python3-distutils
+      - name: Run a build script
+        run: |
+          cd src
+          bash build.bash 0.0.0
