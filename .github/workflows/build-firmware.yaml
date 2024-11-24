@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Build Environment
         run: |
@@ -28,18 +28,18 @@ jobs:
           bash build.bash 0.0.0
 
       - name: Upload Build Artifacts as a Single Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: src/build/*
 
- release:
+  release:
     runs-on: ubuntu-22.04
     needs: build
 
     steps:
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifacts
           path: artifacts
@@ -57,8 +57,13 @@ jobs:
             body: |
                 This is a release for the Neighbor Link Firmware.
 
-      - name: Upload Artifacts to Release
-        uses: actions/upload-artifact@v3
+
+
+      - name: Attach Artifacts to Release
+        uses: svenstaro/upload-release-action@v2
+        if: github.event_name == 'release'
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          artifacts: artifacts/*
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+            file: artifacts/*
+            tag: v0.0.0
+            file_glob: true
