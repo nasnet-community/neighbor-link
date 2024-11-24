@@ -1,4 +1,4 @@
-name: Build the neighbor link firmware
+name: Build the Neighbor Link Firmware
 
 on:
   push:
@@ -7,13 +7,40 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up environment
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Build Environment
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y curl build-essential libncurses-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip python3 python3-distutils
-      - name: Run a build script
+          sudo apt-get install -y \
+            curl build-essential libncurses-dev zlib1g-dev \
+            gawk git gettext libssl-dev xsltproc rsync wget unzip \
+            python3 python3-distutils
+
+      - name: Build the Firmware
         run: |
           cd src
           bash build.bash 0.0.0
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: v0.0.0
+          release_name: Neighbor Link Firmware v0.0.0
+          draft: false
+          prerelease: false
+          body: |
+            This is a release for the Neighbor Link Firmware.
+
+      - name: Upload Files to Release
+        uses: sevenfivenine/upload-release-action@v1
+        with:
+          files: src/build/*
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          release-url: ${{ steps.create_release.outputs.html_url }}
