@@ -27,6 +27,23 @@ jobs:
           cd src
           bash build.bash 0.0.0
 
+      - name: Upload Build Artifacts as a Single Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: src/build/*
+
+  release:
+    runs-on: ubuntu-22.04
+    needs: build
+
+    steps:
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: artifacts
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -38,9 +55,13 @@ jobs:
           body: |
             This is a release for the Neighbor Link Firmware.
 
-      - name: Upload Files to Release
-        uses: sevenfivenine/upload-release-action@v1
-        with:
-          files: src/build/*
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          release-url: ${{ steps.create_release.outputs.html_url }}
+      - name: Attach Artifacts to Release
+        run: |
+          for file in artifacts/*; do
+            echo "Uploading $file..."
+            curl -sSL -X POST \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Content-Type: $(file -b --mime-type "$file")" \
+              --data-binary @"$file" \
+              "${{ steps.create_release.outputs.upload_url }}?name=$(basename "$file")"
+          done
