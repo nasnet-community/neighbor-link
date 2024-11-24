@@ -33,7 +33,7 @@ jobs:
           name: build-artifacts
           path: src/build/*
 
-  release:
+ release:
     runs-on: ubuntu-22.04
     needs: build
 
@@ -57,13 +57,8 @@ jobs:
             body: |
                 This is a release for the Neighbor Link Firmware.
 
-      - name: Attach Artifacts to Release
-        run: |
-          for file in artifacts/*; do
-            echo "Uploading $file..."
-            curl -sSL -X POST \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Content-Type: $(file -b --mime-type "$file")" \
-              --data-binary @"$file" \
-              "${{ steps.create_release.outputs.upload_url }}?name=$(basename "$file" | jq -sRr @uri)"
-          done
+      - name: Upload Artifacts to Release
+        uses: actions/upload-artifact@v3
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          artifacts: artifacts/*
