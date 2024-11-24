@@ -48,7 +48,7 @@ for target in "${target_info[@]}"; do
 
   rm -rf openwrt-imagebuilder-*
   wget $download_url
-  tar -J -x -f openwrt-imagebuilder-$PATH_PART.Linux-x86_64.tar.xz
+  tar -J -x -f openwrt-imagebuilder-$PATH_PART.Linux-x86_64.tar.xz 2>/dev/null > /dev/null
 
   sed -i "s/option version .*/option version '$release_version'/" "files/etc/config/routro"
   IMAGEBUILDER_REPO="openwrt-imagebuilder-$PATH_PART.Linux-x86_64"
