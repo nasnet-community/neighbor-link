@@ -20,7 +20,7 @@ jobs:
           sudo apt-get install -y \
             curl build-essential libncurses-dev zlib1g-dev \
             gawk git gettext libssl-dev xsltproc rsync wget unzip \
-            python3 python3-distutils
+            python3 python3-distutils jq
 
       - name: Build the Firmware
         run: |
@@ -65,5 +65,5 @@ jobs:
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               -H "Content-Type: $(file -b --mime-type "$file")" \
               --data-binary @"$file" \
-              "${{ steps.create_release.outputs.upload_url }}?name=$(basename "$file")"
+              "${{ steps.create_release.outputs.upload_url }}?name=$(basename "$file" | jq -sRr @uri)"
           done
