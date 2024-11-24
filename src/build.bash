@@ -1,5 +1,4 @@
-
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This script is designed to run on Ubuntu systems with AMD64 architecture.
 # Please ensure you are running this script on a compatible system.
@@ -10,13 +9,18 @@ set -e
 wrt_version="23.05.2"
 
 #Target Device
-#              Profile                Arch    Chip    Model
-target_info=( "tplink_archer-c7-v5    ath79   generic tp-link_archer_c7_v5" \
-              "tplink_archer-c7-v2    ath79   generic tp-link_archer_c7_v2" \
-              "tplink_archer-a7-v5    ath79   generic tp-link_archer_a7_v5" \
-              "glinet_gl-mt300a       ramips  mt7620  gl-mt300a" \
-              "tplink_archer-ax23-v1  ramips  mt7621  tp-link_archer-ax23-v1"
-            )
+#              Profile                Arch    Chip
+targets=( "tplink_archer-c7-v5    ath79   generic" \
+          "tplink_archer-c7-v2    ath79   generic" \
+          "tplink_archer-a7-v5    ath79   generic" \
+          "glinet_gl-mt300a       ramips  mt7620" \
+          "tplink_archer-ax23-v1  ramips  mt7621"
+        )
+
+declare -A target_info
+for entry in "${targets[@]}"; do
+    target_info["$(echo "$entry" | awk '{print $1}')"]="$(echo "$entry" | cut -d' ' -f2-)"
+done
 
 # Excluded packages
 EXCLUDE_PACKAGES='-dnsmasq -wpad-basic-mbedtls'
@@ -37,48 +41,53 @@ else
   release_version="0.0.0"
 fi
 
+if [ -n "$2" ]; then
+  profiles=$2
+else
+  profiles="${!target_info[*]}"
+fi
 
-for target in "${target_info[@]}"; do
+for profile in $profiles; do
 
-  IFS=' ' read -r profile cpu_arch chipset  device_model <<< "$target"
+  IFS=' ' read -r cpu_arch chipset <<< "${target_info[$profile]}"
 
   PATH_PART="$wrt_version-$cpu_arch-$chipset"
-  
+
   download_url="https://archive.openwrt.org/releases/$wrt_version/targets/$cpu_arch/$chipset/openwrt-imagebuilder-$PATH_PART.Linux-x86_64.tar.xz"
 
   rm -rf openwrt-imagebuilder-*
-  wget $download_url
-  tar -J -x -f openwrt-imagebuilder-$PATH_PART.Linux-x86_64.tar.xz
+  curl -fsSL "$download_url" -O
+  tar -J -x -f openwrt-imagebuilder-"$PATH_PART".Linux-x86_64.tar.xz 2>/dev/null > /dev/null
 
   sed -i "s/option version .*/option version '$release_version'/" "files/etc/config/routro"
   IMAGEBUILDER_REPO="openwrt-imagebuilder-$PATH_PART.Linux-x86_64"
-  cd $IMAGEBUILDER_REPO
+  cd "$IMAGEBUILDER_REPO"
 
-  TEXT_FILE=../$BUILD_DIR/version-$device_model.txt
-  echo "new_version=$release_version" > $TEXT_FILE
+  TEXT_FILE=../$BUILD_DIR/version-$profile.txt
+  echo "new_version=$release_version" > "$TEXT_FILE"
 
   #Make the images
-  make image PROFILE=$profile PACKAGES="$INCLUDE_PACKAGES $EXCLUDE_PACKAGES" FILES=$FILES
+  make image PROFILE="$profile" PACKAGES="$INCLUDE_PACKAGES $EXCLUDE_PACKAGES" FILES=$FILES
 
-  dest_of_bin="bin/targets/$arch/$chip/"
+  dest_of_bin="bin/targets/$cpu_arch/$chipset/"
 
   # Loop over the files with .bin extension in the bin/ directory
-  for file in $(find $dest_of_bin -type f -name "*.bin"); do
+  for file in $(find "$dest_of_bin" -type f -name "*.bin"); do
 
-    newname=$(echo $file | sed " s|openwrt-$PATH_PART-$profile-|$device_model-$release_version-| " )
-   
+    newname=$(echo "$file" | sed " s|openwrt-$PATH_PART-$profile-|$profile-$release_version-| " )
+
     newfile=../$BUILD_DIR/$(basename "$newname")
     echo "$newfile:"
     # Rename the file
-    mv "$file" $newfile
+    mv "$file" "$newfile"
 
     if [[ "$file" == *"sysupgrade"* ]];then
       filename=$(basename "$newname" )
-      echo "firmwareUrl=https://github.com/nasnet-community/neighbor-link/blob/0f2001dd371d02357248beb61ec9a812d82a743a/builds/$filename" >> $TEXT_FILE
+      echo "firmwareUrl=https://github.com/nasnet-community/neighbor-link/blob/0f2001dd371d02357248beb61ec9a812d82a743a/builds/$filename" >> "$TEXT_FILE"
     fi
 
   done
-  
+
   cd ../
 
 done

@@ -1,0 +1,54 @@
+name: Build the Neighbor Link Firmware
+
+on:
+  push:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - "tplink_archer-c7-v5"
+          - "tplink_archer-c7-v2"
+          - "tplink_archer-a7-v5"
+          - "glinet_gl-mt300a"
+          - "tplink_archer-ax23-v1"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Build Environment
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y \
+            curl build-essential libncurses-dev zlib1g-dev \
+            gawk git gettext libssl-dev xsltproc rsync unzip \
+            python3 python3-distutils jq
+
+      - name: Build the Firmware
+        run: |
+          cd src
+          bash build.bash ${GITHUB_SHA::6} ${{ matrix.profile }}
+          echo "release_version=${GITHUB_SHA::6}" >> build/RELEASE_VERSION
+
+      - name: Upload Build Artifacts as a Single Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.profile }}_${{ github.sha }}
+          path: src/build/*
+
+      - name: Attach Artifacts to Release
+        uses: svenstaro/upload-release-action@v2
+        if: github.event_name == 'release'
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: src/build/*
+          tag: ${{ github.ref }}
+          file_glob: true
