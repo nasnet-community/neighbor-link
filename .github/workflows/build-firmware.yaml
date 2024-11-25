@@ -32,6 +32,7 @@ jobs:
         run: |
           cd src
           bash build.bash ${{ env.release_version }}
+          echo "release_version=$release_version" >> build/RELEASE_VERSION
 
       - name: Upload Build Artifacts as a Single Artifact
         uses: actions/upload-artifact@v4
@@ -44,17 +45,17 @@ jobs:
     needs: build
 
     steps:
-      - name: Source Release Version
-        run: |
-          source RELEASE_VERSION
-          echo "release_version=$release_version"
-          echo "release_version=$release_version" >> $GITHUB_ENV
-
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
           path: artifacts
+
+      - name: Source Release Version
+        run: |
+           source artifacts/RELEASE_VERSION
+           echo "release_version=$release_version"
+           echo "release_version=$release_version" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
