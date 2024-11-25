@@ -14,6 +14,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Source Release Version
+        run: |
+          source RELEASE_VERSION
+          echo "release_version=$release_version"
+          echo "release_version=$release_version" >> $GITHUB_ENV
+
       - name: Set up Build Environment
         run: |
           sudo apt-get update -y
@@ -25,7 +31,7 @@ jobs:
       - name: Build the Firmware
         run: |
           cd src
-          bash build.bash 0.0.0
+          bash build.bash ${{ env.release_version }}
 
       - name: Upload Build Artifacts as a Single Artifact
         uses: actions/upload-artifact@v4
@@ -48,19 +54,19 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            tag_name: v0.0.0
-            release_name: Neighbor Link Firmware v0.0.0
-            draft: false
-            prerelease: false
-            body: |
-                This is a release for the Neighbor Link Firmware.
+          tag_name: v${{ env.release_version }}
+          release_name: Neighbor-Link v${{ env.release_version }}
+          draft: false
+          prerelease: false
+          body: |
+            This is a release for the Neighbor Link Firmware.
 
       - name: Attach Artifacts to Release
         uses: svenstaro/upload-release-action@v2
         with:
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-            file: artifacts/*
-            tag: v0.0.0
-            file_glob: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/*
+          tag: v${{ env.release_version }}
+          file_glob: true
