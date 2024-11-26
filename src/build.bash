@@ -63,9 +63,6 @@ for profile in $profiles; do
   IMAGEBUILDER_REPO="openwrt-imagebuilder-$PATH_PART.Linux-x86_64"
   cd "$IMAGEBUILDER_REPO"
 
-  TEXT_FILE=../$BUILD_DIR/version-$profile.txt
-  echo "new_version=$release_version" > "$TEXT_FILE"
-
   #Make the images
   make image PROFILE="$profile" PACKAGES="$INCLUDE_PACKAGES $EXCLUDE_PACKAGES" FILES=$FILES
 
@@ -81,13 +78,8 @@ for profile in $profiles; do
     # Rename the file
     mv "$file" "$newfile"
 
-    if [[ "$file" == *"sysupgrade"* ]];then
-      filename=$(basename "$newname" )
-      echo "firmwareUrl=https://github.com/nasnet-community/neighbor-link/blob/0f2001dd371d02357248beb61ec9a812d82a743a/builds/$filename" >> "$TEXT_FILE"
-    fi
-
   done
-
+  
   cd ../
 
 done
