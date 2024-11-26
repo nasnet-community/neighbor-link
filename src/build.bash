@@ -79,7 +79,7 @@ for profile in $profiles; do
     mv "$file" "$newfile"
 
   done
-  
+
   cd ../
 
 done
