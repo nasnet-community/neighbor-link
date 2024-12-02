@@ -1,5 +1,7 @@
 # Run setup script
 # This script execute once at the device startup.
+# InfiniteReach = CityLink
+
 
 # last 2 letter of  mac address. added to the SSID
 IDENTIFIER=$(cat /sys/class/net/eth0/address | awk -F ':' '{print $6}');

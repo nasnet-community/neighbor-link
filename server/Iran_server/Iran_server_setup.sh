@@ -224,7 +224,7 @@ deploy_service() {
         generate_string
         echo ""
         echo ""
-        echo "Copy the following string into the Infinitereach dashboard:"
+        echo "Copy the following string into the CityLink dashboard:"
         echo ""
         echo -e "\033[0;32m$(generate_string)\033[0m"
 
@@ -246,7 +246,7 @@ retrieve_service_config() {
 
     echo ""
     echo ""
-    echo "Copy the following string into the Infinitereach dashboard:"
+    echo "Copy the following string into the CityLink dashboard:"
     echo ""
     echo -e "\033[0;32m$KEYSTRING\033[0m"
 
