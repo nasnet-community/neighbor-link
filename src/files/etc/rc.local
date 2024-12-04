@@ -215,6 +215,9 @@ uci add_list uhttpd.portal.lua_prefix='/auth=/www/portal/auth.lua'
 uci add_list uhttpd.portal.setenv='Cache-Control=no-store, no-cache, must-revalidate, max-age=0'
 uci add_list uhttpd.portal.setenv='Pragma=no-cache'
 uci add_list uhttpd.portal.setenv='Expires=-1'
+
+sed -i 's|<a href="cgi-bin/luci/">.*</a>|<a href="nlink-dashboard/index.html">NeighborLink User Interface</a>|g' /www/index.html
+
 #--------------------------------------
 
 #################################################################################

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <title>Step 4</title>
@@ -11,16 +12,19 @@
     <script type="text/javascript" src="ubus.js" defer></script>
     <script type="text/javascript" src="settings.js" defer></script>
     <script type="text/javascript" src="heartBeat.js" defer></script>
-    
+
 </head>
+
 <body>
     <div class="container">
         <!-- Button container with border -->
         <div class="row button-container justify-content-between mt-3 align-items-center">
             <div class="col-auto">
                 <a id="back-btn-href" href="dashboard.html" class="btn btn-light">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5" />
                     </svg>
                     <span id="back-btn-text">Back</span>
                 </a>
@@ -30,10 +34,10 @@
             </div>
             <div class="col-auto">
                 <a href="dashboard.html" class="btn btn-link">Dashboard</a>
-            </a>
+                </a>
             </div>
         </div>
-        
+
 
         <div id="other-parts" class="d-block">
             <h2 class="text-warning mt-5">Config</h2>
@@ -56,9 +60,14 @@
                     <button type="button" class="btn btn-success mt-4" id="wifi-update">Update</button>
                 </div>
             </div>
-        
+            <div class="row">
+                <a name="Advance Settings" id="" class="btn btn-link" href="../cgi-bin/luci/" role="button">Advance
+                    Settings</a>
+            </div>
+
+
         </div>
-                           
+
     </div>
     <div id="overlay" class="display=none flex-column align-items-center mb-3">
         <div class="spinner-border text-light mb-2" role="status">
@@ -66,15 +75,17 @@
         </div>
         <div class="fs-4 px-4 py-3" role="message">
             <h6 id="overlay_message" class="text text-light">
-             Loading...   
+                Loading...
             </h6>
         </div>
-    </div> 
- 
+    </div>
+
     <div class="toast-container position-fixed  top-0 start-0 text-center" style="width: 100%;">
-        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000" style="width: 100%">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000"
+            style="width: 100%">
             <div class="alert alert-danger m-0" role="alert">You're not connected to router!</div>
         </div>
     </div>
 </body>
+
 </html>
