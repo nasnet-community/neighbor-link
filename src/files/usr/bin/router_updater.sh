@@ -4,22 +4,18 @@
 deviceModel=$(cat /proc/device-tree/model)
 deviceModel=$(echo "$deviceModel" | awk '{print tolower($0)}' | tr ' ' '_')
 
-url="https://github.com/nasnet-community/neighbor-link/blob/0f2001dd371d02357248beb61ec9a812d82a743a/builds/version-$deviceModel.txt"
+github_api_url=https://api.github.com/repos/nasnet-community/neighbor-link/releases/latest
+
+json_response=$(curl -s "$github_api_url")
 
 if [ "$1" == "Check" ];then
 
-    # Download versioning.txt using wget
-    curl "$url" -s -o /versioning.txt.new
+    new_version=$(echo "$json_response" | jq -r '.tag_name')
+    active_version=$(uci get routro.firmware.version)
 
     # Check if the download was successful
-    if [ $? -eq 0 ]; then
+    if [ -n "$new_version" ]; then
         
-        #Containg the active_version
-        source /VERSION
-
-        #Containg the new_version
-        source /versioning.txt.new
-
         # Compare versions
         if [ "$new_version" = "$active_version" ]; then
             echo "Versions are the same: $new_version"
@@ -27,25 +23,29 @@ if [ "$1" == "Check" ];then
             echo "Versions are different. New version: $new_version, Current version: $active_version"
         fi
 
-        # Cleanup: Remove the temporary file
-        rm /versioning.txt.new
     else
         echo "Failed to download info from Server"
     fi
 elif [ "$1" == "Do" ];then
-    # Define the URL for the versioning.txt file
 
-    # Download versioning.txt using wget
-    curl "$url" -s -o /versioning.txt.new
+    # Parse the array of browser_download_url values
+    urls=$(echo "$json_response" | jq -r '.assets[].browser_download_url')
+    # Get the device profile name generate in build script
+    profile=$(uci get routro.firmware.profile)
+
+    for url in $urls; do
+        # Check if the URL contains both the profile and "sysupgrade"
+        if echo "$url" | grep -q "$profile" && echo "$url" | grep -q "sysupgrade"; then
+            firmwareUrl="$url"
+            break
+        fi
+    done
 
     # Check if the download was successful
-    if [ $? -eq 0 ]; then
+    if [ -n "$firmwareUrl" ]; then
         
-        # Containg new_version and firmwareUrl
-        source /versioning.txt.new
-
-        # Download versioning.txt using wget
-        curl "$firmwareUrl" -s -o /tmp/firmware.bin
+        # Download versioning.txt using curl
+        curl -L -o /tmp/firmware.bin "$firmwareUrl"
 
         if [ $? -eq 0 ]; then
             echo "Firmware Downloaded Successfully"

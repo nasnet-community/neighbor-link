@@ -16,6 +16,7 @@ config device_admin 'device_admin'
 
 config firmware 'firmware'
     option version '0.0.99'
+    option profile 'device_profile_name'
 
 config outlinegate 'outlinegate'
     option enabled '0'
