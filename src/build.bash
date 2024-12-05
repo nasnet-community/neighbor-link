@@ -60,6 +60,8 @@ for profile in $profiles; do
   tar -J -x -f openwrt-imagebuilder-"$PATH_PART".Linux-x86_64.tar.xz 2>/dev/null > /dev/null
 
   sed -i "s/option version .*/option version '$release_version'/" "files/etc/config/routro"
+  sed -i "s/option profile .*/option profile '$profile'/" "files/etc/config/routro"
+  
   IMAGEBUILDER_REPO="openwrt-imagebuilder-$PATH_PART.Linux-x86_64"
   cd "$IMAGEBUILDER_REPO"
 
