@@ -49,22 +49,31 @@ btnFrimware.onclick=function (e){
 //     }
 // });
 
-
+function showWarning(status){
+    if(status=="show"){
+        document.getElementById("warning-part").classList.remove('d-none');
+    }else{
+        document.getElementById("warning-part").classList.add('d-none');
+    }
+}
 
 function changeVPNstatus(status) {
     if (status == "connect") {
         vpnShield.setAttribute ('fill' ,'blue')
         vpnStauts.textContent = "Connected"
+        showWarning("hide")
         //vpnOn.checked=true
     }
     if (status == "disconnect") {
         vpnShield.setAttribute ('fill' ,'red')
         vpnStauts.textContent = "Disconnected"
+        showWarning("show")
         //vpnOff.checked=true
     }
     if (status == "connecting") {
         vpnShield.setAttribute ('fill' ,'yellow')
         vpnStauts.textContent = "Connecting..."
+        showWarning("show")
         //vpnOff.checked=true
     }
     

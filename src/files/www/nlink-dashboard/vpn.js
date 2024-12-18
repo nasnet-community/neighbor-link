@@ -16,16 +16,19 @@ function changeVPNstatus(status) {
         vpnShield.setAttribute ('fill' ,'blue')
         vpnStauts.textContent = "Connected"
         vpnOn.checked=true
+        showWarning("hide")
     }
     if (status == "disconnect") {
         vpnShield.setAttribute ('fill' ,'red')
         vpnStauts.textContent = "Disconnected"
         vpnOff.checked=true
+        showWarning("show")
     }
     if (status == "connecting") {
         vpnShield.setAttribute ('fill' ,'yellow')
         vpnStauts.textContent = "Connecting..."
         vpnOff.checked=true
+        showWarning("show")
     }
     
 }
@@ -202,3 +205,21 @@ async function setWireguardConfig(config){
     const VPN_CONFIG=["file","exec",{"command":"dragon.sh","params":[ "wireguard-set-conf", btoa(JSON.stringify(config) ) ]}];
     res = await async_ubus_call(VPN_CONFIG)
 }
+
+function showWarning(status){
+    if(status=="show"){
+        document.getElementById("warning-part").classList.remove('d-none');
+    }else{
+        document.getElementById("warning-part").classList.add('d-none');
+    }
+}
+
+document.getElementById('en-btn').addEventListener('click', function() {
+    document.getElementById('english-alert').classList.remove('d-none');
+    document.getElementById('farsi-alert').classList.add('d-none');
+});
+
+document.getElementById('fa-btn').addEventListener('click', function() {
+    document.getElementById('english-alert').classList.add('d-none');
+    document.getElementById('farsi-alert').classList.remove('d-none');
+});
