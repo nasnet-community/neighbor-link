@@ -1,27 +1,37 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const wiredBtn = document.getElementById('wired-btn');
-    const wirelessBtn = document.getElementById('wireless-btn');
 
-    // Check if WAN2 device exists
-    ubus.call('network.interface', 'dump', {})
-        .then(response => {
-            const interfaces = response.interface;
-            const hasWan2 = interfaces.some(iface => iface.device === 'wan2');
+const wiredBtn = document.getElementById('wired-btn');
+const wirelessBtn = document.getElementById('wireless-btn');
+
+wiredBtn.addEventListener('click', () => {
+    window.location.href = 'wan2.html';
+});
+
+wirelessBtn.addEventListener('click', () => {
+    window.location.href = 'wifi.html';
+});
+
+netdump();
+function netdump(){
+    loading(true)
+    const NET_DUMP=["network.interface","dump",{}]
+    wanInterface="";
+    ubus_call(NET_DUMP,function(chunk){
+        if(chunk[0]==0){
             
-            // Enable wired button only if WAN2 device exists
-            wiredBtn.disabled = !hasWan2;
-        })
-        .catch(error => {
-            console.error('Error checking network interfaces:', error);
-            wiredBtn.disabled = true;
-        });
+            InterfaceInfo=chunk[1].interface;
+            InterfaceInfo.forEach(element => {
+                if (element.interface == "wan2") {
+                    wanInterface=element 
+                    wiredBtn.disabled = false;
+                    console.log(element);
+                } 
+            });
+        }
+        if(wanInterface.up ){
+            console.log("wanInterface")
+        }
 
-    // Add click handlers
-    wiredBtn.addEventListener('click', () => {
-        window.location.href = 'wan2.html';
+        loading(false)
+        
     });
-
-    wirelessBtn.addEventListener('click', () => {
-        window.location.href = 'wifi.html';
-    });
-}); 
+}
