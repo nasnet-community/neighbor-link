@@ -241,3 +241,13 @@ async function getConfig(){
         updateReach("disable")
     }
 }
+
+document.getElementById('en-btn').addEventListener('click', function() {
+    document.getElementById('english-alert').classList.remove('d-none');
+    document.getElementById('farsi-alert').classList.add('d-none');
+});
+
+document.getElementById('fa-btn').addEventListener('click', function() {
+    document.getElementById('english-alert').classList.add('d-none');
+    document.getElementById('farsi-alert').classList.remove('d-none');
+});
