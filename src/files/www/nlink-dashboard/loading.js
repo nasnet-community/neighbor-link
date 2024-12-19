@@ -105,3 +105,38 @@ function addCustomAlert(title, message, visibilityTime) {
         setTimeout(() => alertDiv.remove(), 500); // Removes it after fade out
     }, visibilityTime || 20000);
 }
+
+
+
+
+// Language Switching
+const englishButton = document.querySelector('.en-btn');
+const persianButtons = document.querySelectorAll('.fa-btn');
+
+function switchLanguage(showEnglish) {
+    const englishElements = document.querySelectorAll('.english-text');
+    const persianElements = document.querySelectorAll('.farsi-text');
+    
+    englishElements.forEach(el => {
+        el.style.display = showEnglish ? 'block' : 'none';
+    });
+    
+    persianElements.forEach(el => {
+        el.style.display = showEnglish ? 'none' : 'block';
+    });
+}
+
+// English button click handler
+englishButton.addEventListener('click', () => {
+    switchLanguage(true);
+});
+
+// Persian buttons click handler
+persianButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        switchLanguage(false);
+    });
+});
+
+// Initialize with Persian text by default
+switchLanguage(false);
