@@ -34,32 +34,30 @@ uci set routro.remote.accesshost="-"
 #################################################################################
 #-------------< Network 
 #################################################################################
+# Check if wan2 exists in network configuration
+if ! uci -q get network.wan2 > /dev/null; then
+    # Only apply network settings if wan2 doesn't exist
     # Set default lan IP to 151 range
-uci set network.lan.ipaddr='192.168.151.1'
+    uci set network.lan.ipaddr='192.168.151.1'
     # Set default wan metric
-uci set network.wan.metric='20'
-uci set network.wan6.metric='1'
+    uci set network.wan.metric='20'
+    uci set network.wan6.metric='1'
     # Set up wwan interface
-uci set network.wwan=interface
-uci set network.wwan.proto='dhcp'
-uci set network.wwan.metric='10'
-
-# uci set network.wan.peerdns='0'
-# uci set network.wan.dns='8.8.8.8'
-
-# uci set network.wwan.peerdns='0'
-# uci set network.wwan.dns='8.8.8.8'
+    uci set network.wwan=interface
+    uci set network.wwan.proto='dhcp'
+    uci set network.wwan.metric='10'
 
     # Set up bridge device
-uci set network.brlan2=device
-uci set network.brlan2.name='brlan-2'
-uci set network.brlan2.type='bridge'
+    uci set network.brlan2=device
+    uci set network.brlan2.name='brlan-2'
+    uci set network.brlan2.type='bridge'
     # Set up Guest interface
-uci set network.Guest=interface
-uci set network.Guest.proto='static'
-uci set network.Guest.ipaddr='192.168.3.1'
-uci set network.Guest.netmask='255.255.255.0'
-uci set network.Guest.device='brlan-2'
+    uci set network.Guest=interface
+    uci set network.Guest.proto='static'
+    uci set network.Guest.ipaddr='192.168.3.1'
+    uci set network.Guest.netmask='255.255.255.0'
+    uci set network.Guest.device='brlan-2'
+fi
 
 
 #################################################################################
@@ -202,9 +200,7 @@ uci set tinyproxy.@tinyproxy[0].BasicAuth="$USER $RANDOMPASS"
 #-------------< uhhtpd
 #################################################################################
 uci set uhttpd.main.listen_http='192.168.151.1:80'
-uci add_list uhttpd.main.setenv='Cache-Control=no-store, no-cache, must-revalidate, max-age=0'
-uci add_list uhttpd.main.setenv='Pragma=no-cache'
-uci add_list uhttpd.main.setenv='Expires=-1'
+
 
 uci add uhttpd uhttpd
 uci rename uhttpd.@uhttpd[1]="portal"
@@ -212,9 +208,7 @@ uci rename uhttpd.@uhttpd[1]="portal"
 uci set uhttpd.portal.listen_http='192.168.3.1:2027'
 uci set uhttpd.portal.home='/www/portal'
 uci add_list uhttpd.portal.lua_prefix='/auth=/www/portal/auth.lua'
-uci add_list uhttpd.portal.setenv='Cache-Control=no-store, no-cache, must-revalidate, max-age=0'
-uci add_list uhttpd.portal.setenv='Pragma=no-cache'
-uci add_list uhttpd.portal.setenv='Expires=-1'
+
 
 sed -i 's|cgi-bin/luci|nlink-dashboard|g' /www/index.html
 
