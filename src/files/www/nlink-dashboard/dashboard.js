@@ -202,13 +202,17 @@ function netdump(){
     ubus_call(NET_DUMP,function(chunk){
         if(chunk[0]==0){
             
-            InterfaceInfo=chunk[1].interface;
+            let InterfaceInfo=chunk[1].interface;
+            let starlinkConnected = false;
             InterfaceInfo.forEach(element => {
                 if (element.interface == "wwan") {
                     if(element.up){
-                        updateStarlink("connect")
-                    }else{
-                        updateStarlink("disconnect")
+                        starlinkConnected = true;
+                    }
+                } 
+                if (element.interface == "wan2") {
+                    if(element.up){
+                        starlinkConnected = true;
                     }
                 } 
                 if (element.interface == "wan") {
@@ -226,6 +230,11 @@ function netdump(){
                     }
                 }   
             });
+            if (starlinkConnected) {
+                updateStarlink("connect");
+            } else {
+                updateStarlink("disconnect");
+            }
         }
         loading(false)
     });
