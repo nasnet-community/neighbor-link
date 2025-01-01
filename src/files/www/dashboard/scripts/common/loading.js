@@ -126,17 +126,19 @@ function switchLanguage(showEnglish) {
     });
 }
 
-// English button click handler
-englishButton.addEventListener('click', () => {
-    switchLanguage(true);
-});
-
-// Persian buttons click handler
-persianButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        switchLanguage(false);
+if( englishButton && persianButtons){
+    // English button click handler
+    englishButton.addEventListener('click', () => {
+        switchLanguage(true);
     });
-});
 
-// Initialize with Persian text by default
-switchLanguage(false);
+    // Persian buttons click handler
+    persianButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            switchLanguage(false);
+        });
+    });
+
+    // Initialize with Persian text by default
+    switchLanguage(false);
+}
