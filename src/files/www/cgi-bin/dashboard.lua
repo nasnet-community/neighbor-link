@@ -25,7 +25,7 @@ function handle_request(env)
 
     -- Get file extension for content type (using cleaned path)
     local ext = path:match("%.([^%.]+)$")
-    local content_type = content_types[ext] or "text/plain"
+    local content_type = content_types[ext] or "text/html"
 
    -- Try to open and read the file
    local file = io.open(file_path, "r")
