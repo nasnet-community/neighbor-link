@@ -19,13 +19,13 @@ function handle_request(env)
     -- Remove query string and hashtag from the path
     path = path:gsub("%?.*$", ""):gsub("#.*$", "")
     
+    -- Extract everything after /dashboard/ instead of just the last segment
+    local relative_path = path:match("/dashboard/(.*)$") or ""
+    local file_path = "/www/dashboard/" .. (relative_path ~= "" and relative_path or "index.html")
+
     -- Get file extension for content type (using cleaned path)
     local ext = path:match("%.([^%.]+)$")
     local content_type = content_types[ext] or "text/plain"
-
-    -- Extract the file name from the cleaned path
-    local filename = path:match("([^/]+)$")
-    local file_path = "/www/nlink-dashboard/" .. (filename or "index.html")
 
    -- Try to open and read the file
    local file = io.open(file_path, "r")
