@@ -33,6 +33,9 @@ function handle_request(env)
        -- Output headers
        print("Status: 200 OK")
        print("Content-Type: " .. content_type)
+       print("Cache-Control: no-store, no-cache, must-revalidate, max-age=0")
+       print("Pragma: no-cache")
+       print("Expires: 0")
        print("")
        
        -- Read and output file content
@@ -43,6 +46,9 @@ function handle_request(env)
        -- File not found - return 404
        print("Status: 404 Not Found")
        print("Content-Type: text/html")
+       print("Cache-Control: no-store, no-cache, must-revalidate, max-age=0")
+       print("Pragma: no-cache")
+       print("Expires: 0")
        print("")
        print("<html><body><h1>404 - File not found</h1></body></html>")
    end
