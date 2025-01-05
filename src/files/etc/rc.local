@@ -202,7 +202,7 @@ uci set tinyproxy.@tinyproxy[0].BasicAuth="$USER $RANDOMPASS"
 #-------------< uhhtpd
 #################################################################################
 
-sed -i 's|cgi-bin/luci|lua-bin/dashboard/index.html|g' /www/index.html
+sed -i 's|cgi-bin/luci|lua-bin/dashboard|g' /www/index.html
 
 #--------------------------------------
 
