@@ -201,22 +201,8 @@ uci set tinyproxy.@tinyproxy[0].BasicAuth="$USER $RANDOMPASS"
 #################################################################################
 #-------------< uhhtpd
 #################################################################################
-uci set uhttpd.main.listen_http='192.168.151.1:80'
-uci add_list uhttpd.main.setenv='Cache-Control=no-store, no-cache, must-revalidate, max-age=0'
-uci add_list uhttpd.main.setenv='Pragma=no-cache'
-uci add_list uhttpd.main.setenv='Expires=-1'
 
-uci add uhttpd uhttpd
-uci rename uhttpd.@uhttpd[1]="portal"
-# TODO : Set port 80 and add access.portal to be resolve into 192.168.3.1 in dnsmaq
-uci set uhttpd.portal.listen_http='192.168.3.1:2027'
-uci set uhttpd.portal.home='/www/portal'
-uci add_list uhttpd.portal.lua_prefix='/auth=/www/portal/auth.lua'
-uci add_list uhttpd.portal.setenv='Cache-Control=no-store, no-cache, must-revalidate, max-age=0'
-uci add_list uhttpd.portal.setenv='Pragma=no-cache'
-uci add_list uhttpd.portal.setenv='Expires=-1'
-
-sed -i 's|cgi-bin/luci|nlink-dashboard|g' /www/index.html
+sed -i 's|cgi-bin/luci|lua-bin/dashboard/index.html|g' /www/index.html
 
 #--------------------------------------
 
