@@ -6,7 +6,7 @@
 
 نیبرلینک یک سیستم‌عامل OpenWRT شخصی‌سازی‌شده است که به مدیر سیستم امکان می‌دهد اینترنت استارلینک را با کاربران دیگر، مثلاً همسایه‌ها، به اشتراک بگذارد. این سیستم در حال حاضر امکاناتی مانند مدیریت کاربران، تفکیک مسیر (Split Tunneling) و مخفی‌سازی آی‌پی با استفاده از وی‌پی‌ان را فراهم می‌کند. در آینده، قابلیت‌های دیگری مانند لیست سفید (Whitelisting)، لیست سیاه (Blacklisting) و مدیریت ترافیک به نیبرلینک افزوده خواهد شد.
 
-سیتی لینک (CityLink) یکی از گزینه‌های نیبرلینک است که با استفاده از آن می‌توان از راه دور و با استفاده از اینترنت داخلی یک کشور، به‌صورت امن و ناشناس به استارلینک متصل شد. در حال حاضر، می‌توان با پروکسی‌هایی مانند SwitchyOmega، FoxyProxy و Potasto و همچنین با استفاده از Outline، از سیتی لینک استفاده کرد.
+سیتی لینک (CityLink) یکی از گزینه‌های نیبرلینک است که با استفاده از آن می‌توان از راه دور و با استفاده از اینترنت داخلی یک کشور، به‌صورت امن و ناشناس به استارلینک متصل شد. در حال حاضر، می‌توان با پروکسی‌هایی مانند  FoxyProxy و Potasto و همچنین با استفاده از Outline، از سیتی لینک استفاده کرد.
 
 NeighborLink enables individuals in close proximity to a Starlink terminal to retain secure internet access, demonstrating its effectiveness in circumventing widespread internet restrictions.
 The core advantage of NeighborLink is providing resilient local internet access, designed to be impervious to nationwide shutdowns.
@@ -16,7 +16,7 @@ In scenarios where the government enforces a complete internet blackout, this sy
 Key developments including a user management dashboard, split tunneling and VPN technology have been implemented, with future enhancements planned for whitelisting, blacklisting, and traffic management.
 
 CityLink is a feature to enable remote use of Starlink via the domestic internet. In essence, CityLink is composed of two separate methods:
-Proxy (such as SwitchyOmega, FoxyProxy, Potatso)
+Proxy (such as FoxyProxy and Potatso)
 Outline.
 Both the administrator and users can utilize either or both methods according to their needs.
 The CityLink solution was designed with an understanding of, and in response to, the dual structure of Iran's internet - differences in domestic and international internet censorship.
