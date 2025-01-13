@@ -78,6 +78,10 @@ config forwarding
         option src 'guest_zone'
         option dest 'wwanzone'
 
+config forwarding
+        option src 'guest_zone'
+        option dest 'wan2zone'
+
 config forwarding                                    
         option src 'guest_zone'                             
         option dest 'wg0zone' 
