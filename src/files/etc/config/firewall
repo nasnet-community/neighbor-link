@@ -29,6 +29,15 @@ config zone 'wwanzone'
         option masq '1'
         option mtu_fix '1'
 
+config zone 'wan2zone'
+        option name 'wan2zone'
+        list network 'wan2'
+        option input 'REJECT'
+        option output 'ACCEPT'
+        option forward 'REJECT'
+        option masq '1'
+        option mtu_fix '1'
+
 config zone 'wg0zone'                       
         option name 'wg0zone'               
         list network 'wg0'                  
@@ -52,6 +61,10 @@ config forwarding
 config forwarding
         option src 'lan'
         option dest 'wwanzone'
+
+config forwarding
+        option src 'lan'
+        option dest 'wan2zone'
 
 config forwarding                                    
         option src 'lan'                             
