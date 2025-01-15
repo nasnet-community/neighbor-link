@@ -34,8 +34,11 @@ uci set routro.remote.accesshost="-"
 #################################################################################
 #-------------< Network 
 #################################################################################
+# Check if wan2 exists in network configuration
+if ! uci -q get network.wan2 > /dev/null; then
+    # Only apply network settings if wan2 doesn't exist
     # Set default lan IP to 151 range
-uci set network.lan.ipaddr='192.168.151.1'
+    uci set network.lan.ipaddr='192.168.151.1'
     # Set default wan metric
 uci set network.wan.metric='20'
 uci set network.wan6.metric='1'
@@ -60,6 +63,7 @@ uci set network.Guest.proto='static'
 uci set network.Guest.ipaddr='192.168.3.1'
 uci set network.Guest.netmask='255.255.255.0'
 uci set network.Guest.device='brlan-2'
+fi
 
 
 #################################################################################

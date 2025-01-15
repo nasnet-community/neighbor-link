@@ -24,7 +24,7 @@ config pbr 'config'
         list webui_supported_protocol 'udp'
         list webui_supported_protocol 'tcp udp'
         list webui_supported_protocol 'icmp'
-        list supported_interface "wan wwan wg0"
+        list supported_interface "wan wan2 wwan wg0"
 
 config policy                                                     
         option name "IrIp to wan"                                 
