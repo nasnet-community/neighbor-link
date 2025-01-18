@@ -19,14 +19,20 @@ function fix_VPN_route {
         
         if [ ! -z "$WG_HOST_IP" ]; then
             # Delete existing route if it exists
-            ip route del $(ip route | grep "$WG_HOST_IP" | awk '{print $1 " via " $3 " dev " $5}')
+            ip route del $(ip route | grep "$WG_HOST_IP" | awk '{print $1 " via " $3 " dev " $5}') 2>/dev/null
+
+            # Try wwan first, then wan2
+            for INTERFACE in "wwan" "wan2"; do
+                GATEWAY=$(ifstatus $INTERFACE | jq -r .data.dhcpserver)
+                DEVICE=$(ifstatus $INTERFACE | jq -r .device)
             
-            WWAN_GW=$(ifstatus wwan | jq -r .data.dhcpserver)
-            WWAN_DEV=$(ifstatus wwan | jq -r .device)
-            
-            if [ ! -z "$WWAN_GW" ]; then
-                ip route add "$WG_HOST_IP" via "$WWAN_GW" dev "$WWAN_DEV" proto static metric 1
+                # Check if we got valid gateway and device
+                if [ ! -z "$GATEWAY" ] && [ "$GATEWAY" != "null" ] && \
+                   [ ! -z "$DEVICE" ] && [ "$DEVICE" != "null" ]; then
+                    ip route add "$WG_HOST_IP" via "$GATEWAY" dev "$DEVICE" proto static metric 1
+                    break  # Exit the loop once we've found a valid interface
             fi
+            done
         else
             echo "Failed to resolve WG_HOST ($WG_HOST) to an IP address."
         fi
@@ -87,9 +93,15 @@ elif [ "$1" == "off" ];then
     echo "turn of the wireguard"
     ifdown wg0
 
-    # uci set mwan3.vpn.use_policy='wwan_only'
-    # uci commit mwan3
-    uci set pbr.@policy[1].interface='wwan'
+    # Try wwan first, then wan2
+    for INTERFACE in "wwan" "wan2"; do
+        # Check if interface exists and is up
+        if [ -n "$(ifstatus $INTERFACE | jq -r '.up')" ] && [ "$(ifstatus $INTERFACE | jq -r '.up')" = "true" ]; then
+            uci set pbr.@policy[1].interface="$INTERFACE"
+            break  # Exit loop once we've found a valid interface
+        fi
+    done
+    
     uci commit pbr
     
     fix_VPN_route
