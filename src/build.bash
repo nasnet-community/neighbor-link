@@ -62,6 +62,11 @@ for profile in $profiles; do
   sed -i "s/option version .*/option version '$release_version'/" "files/etc/config/routro"
   sed -i "s/option profile .*/option profile '$profile'/" "files/etc/config/routro"
   
+    # Check and copy profile-specific network config if it exists
+  if [ -f "files/etc/config/network.d/$profile.conf" ]; then
+    cp "files/etc/config/network.d/$profile.conf" "files/etc/config/network"
+  fi
+  
   IMAGEBUILDER_REPO="openwrt-imagebuilder-$PATH_PART.Linux-x86_64"
   cd "$IMAGEBUILDER_REPO"
 
