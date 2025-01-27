@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Step 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <script type="text/javascript" src="scripts/common/bootstrap.bundle.min.js" defer></script>
+    <script type="text/javascript" src="scripts/common/loading.js" defer></script>
+    <script type="text/javascript" src="scripts/common/ubus.js" defer></script>
+    <script type="text/javascript" src="scripts/page-specific/wan2.js" defer></script>
+    <script type="text/javascript" src="scripts/common/heartBeat.js" defer></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <!-- Button container with border -->
+        <div class="row button-container justify-content-between mt-3 align-items-center">
+            <div class="col-auto">
+                <a id="back-btn-href" href="wifi.html" class="btn btn-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5" />
+                    </svg>
+                    <span id="back-btn-text">Previous</span>
+                </a>
+            </div>
+            <div class="col text-center">
+                <h6 class="mb-0">Connect NeighborLink to Starlink Using Cable</h6>
+            </div>
+            <div class="col-auto">
+                <a href="dashboard.html" class="btn btn-link">Dashboard</a>
+                <a href="vpn.html" class="btn btn-light">Next
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-arrow-bar-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8m-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Note and How to  -->
+        <div class="row justify-content-center mt-3">
+
+            <!-- Note -->
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div>
+                    In this step, we connect NeighborLink to the starlink using cable. The goal is to have stable & high-speed starlink internet connection.
+                </div>
+                <br>
+                <div dir="rtl">
+            .هدف ما در این مرحله اتصال نیبرلینک به استارلینک با استفاده از کابل شبکه است تا بتوانیم یک اتصال سریع و پایدار داشته باشیم و بیشترین سرعت را دریافت کنیم
+                </div>
+            </div>
+
+            <!-- How to  -->
+            <div class="row alert alert-light" role="alert">
+                <div class="col-auto">
+                    <strong>Instruction:</strong>
+                    <ul>
+                        <li>Connect a network cable from the starlink (yellow or black ports) to the blue WAN port on NeighborLink.</li>
+                        <li>Wait approximately 10 seconds, then click Check Connection.</li>
+                        <li>Once connected (status: Connected), proceed to the next step.</li>
+                    </ul>
+                </div>
+                <div class="col" dir="rtl">
+                    <ul>
+                        <li>با استفاده از یک کابل شبکه، پورت زرد مودم اینترنت ایران را به پورت آبی روتر نیبرلینک وصل کنید. اگر مودم ایران پورت زرد نداشت، از یکی از پورت‌های سیاه استفاده کنید.</li>
+                        <li>حدود ۱۰ ثانیه صبر کنید و سپس روی Check Connection کلیک کنید.</li>
+                        <li>زمانی که Status: Connected نمایش داده شد، روی Next کلیک کنید.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row container justify-content-start">
+            <div class="col-6">
+                <button class="btn btn-primary px-4 py-3" id="check-eth-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-ethernet" viewBox="0 0 16 16">
+                        <path
+                            d="M14 13.5v-7a.5.5 0 0 0-.5-.5H12V4.5a.5.5 0 0 0-.5-.5h-1v-.5A.5.5 0 0 0 10 3H6a.5.5 0 0 0-.5.5V4h-1a.5.5 0 0 0-.5.5V6H2.5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5M3.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m2 0h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25zM9.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25z" />
+                        <path
+                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" />
+                    </svg>
+                    Check Connection
+                </button>
+            </div>
+            <div id="connection-status" class="col-6 alert alert-danger justify-content-center align-items-center">
+                <div class="row">
+                    <div class="col text-start">
+                        <strong>Status: Disconnected</strong>
+                    </div>
+                    <div class="col text-end">
+                        <strong>_</strong>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="overlay" class="display=none flex-column align-items-center mb-3">
+            <div class="spinner-border text-light mb-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="fs-4 px-4 py-3" role="message">
+                <h6 id="overlay_message" class="text text-light">
+                    Loading...
+                </h6>
+            </div>
+        </div>
+
+        <div class="toast-container position-fixed  top-0 start-0 text-center" style="width: 100%;">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000"
+                style="width: 100%">
+                <div class="alert alert-danger m-0" role="alert">You're not connected to router!</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
