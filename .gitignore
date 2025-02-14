@@ -3,3 +3,4 @@
 ramips/
 TODO
 src/openwrt-imagebuilder*
+build/*
